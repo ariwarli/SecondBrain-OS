@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carousel — Literasi Digital | @banirisset</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #D32F2F;
+    --white: #FFFFFF;
+    --black: #0D0D0D;
+    --light-bg: #F5F5F5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #E8E8E8;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  .ig-frame {
+    width: 420px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.14);
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .ig-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 10px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+
+  .ig-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCAF45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .ig-header-text { flex: 1; }
+  .ig-username { font-size: 13px; font-weight: 600; color: var(--black); }
+  .ig-subtitle { font-size: 11px; color: rgba(0,0,0,0.4); }
+  .ig-more { font-size: 20px; color: var(--black); cursor: pointer; line-height: 1; padding-bottom: 4px; }
+
+  .carousel-viewport {
+    width: 420px;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    cursor: grab;
+    position: relative;
+    user-select: none;
+  }
+
+  .carousel-track {
+    display: flex;
+    width: calc(420px * 7);
+    height: 100%;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide {
+    width: 420px;
+    height: 525px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .slide-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 28px 20px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .prog-track {
+    flex: 1;
+    height: 2px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .prog-track.inv { background: rgba(255,255,255,0.15); }
+
+  .prog-fill {
+    height: 100%;
+    background: var(--red);
+    border-radius: 1px;
+  }
+
+  .prog-fill.inv { background: rgba(255,255,255,0.7); }
+
+  .prog-label {
+    font-size: 11px;
+    color: rgba(0,0,0,0.25);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .prog-label.inv { color: rgba(255,255,255,0.3); }
+
+  .slide-arrow {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, transparent, rgba(0,0,0,0.03));
+  }
+
+  .slide-arrow.inv { background: linear-gradient(to right, transparent, rgba(0,0,0,0.2)); }
+
+  .ig-dots {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 0;
+  }
+
+  .ig-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #D1D5DB;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .ig-dot.active {
+    background: var(--red);
+    width: 16px;
+    border-radius: 3px;
+  }
+
+  .ig-actions {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px 4px;
+    gap: 16px;
+  }
+
+  .ig-actions svg {
+    width: 24px;
+    height: 24px;
+    color: var(--black);
+  }
+
+  .ig-bookmark { margin-left: auto; }
+
+  .ig-caption {
+    padding: 4px 16px 16px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--black);
+  }
+
+  .ig-caption strong { font-weight: 600; }
+
+  .ig-caption-time {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    color: rgba(0,0,0,0.35);
+  }
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+  <!-- Header -->
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-header-text">
+      <div class="ig-username">banirisset</div>
+      <div class="ig-subtitle">AI & Digital Marketing Consultant</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="carousel-viewport" id="carousel">
+    <div class="carousel-track" id="track">
+
+      <!-- ══════════════════════════════════════
+           SLIDE 1 — HERO (RED & WHITE)
+      ══════════════════════════════════════ -->
+      <div class="slide" style="background:linear-gradient(135deg, var(--red) 0%, #F44336 100%);display:flex;flex-direction:column;justify-content:space-between;">
+        <!-- Top accent line -->
+        <div style="height:4px;background:var(--white);"></div>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <!-- Logo lockup -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:40px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:16px;font-weight:800;flex-shrink:0;">B</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--white);letter-spacing:1px;text-transform:uppercase;">BANI RISSET</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.7);">@banirisset</div>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:rgba(255,255,255,0.6);text-transform:uppercase;display:block;margin-bottom:20px;">SKILL SURVIVAL</span>
+
+          <!-- Headline -->
+          <div style="font-size:36px;font-weight:900;color:var(--white);line-height:1.08;letter-spacing:-1px;margin-bottom:24px;">Literasi<br>Digital ≠<br>"Bisa pakai<br>komputer."</div>
+
+          <!-- Divider -->
+          <div style="width:60px;height:3px;background:var(--white);margin-bottom:20px;opacity:0.6;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.85);line-height:1.65;font-weight:500;">Ini skill bertahan hidup di 2026.</p>
+        </div>
+
+        <div class="slide-progress">
+          <div class="prog-track inv"><div class="prog-fill inv" style="width:14.28%"></div></div>
+          <span class="prog-label inv">1 / 7</span>
+        </div>
+        <div class="slide-arrow inv">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 2 — CARI KERJA (BLACK & WHITE)
+      ══════════════════════════════════════ -->
+      <div class="slide" style="background:var(--black);">
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:20px;">ALASAN 1</span>
+
+          <!-- Headline -->
+          <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.1;letter-spacing:-0.8px;margin-bottom:28px;">Cari kerja tanpa literasi digital<br>=<span style="color:var(--red);">bunuh diri<br>karir pelan</span></div>
+
+          <!-- Divider -->
+          <div style="width:40px;height:2px;background:var(--red);margin-bottom:24px;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:16px;">Semua industri butuh orang yang paham tools digital.</p>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:20px;">Gak harus kok jadi programmer. Tapi ya minimal:</p>
+
+          <!-- List -->
+          <div style="margin-top:8px;">
+            <p style="font-size:13px;font-weight:600;color:var(--white);line-height:1.7;">✓ Bikin deck</p>
+            <p style="font-size:13px;font-weight:600;color:var(--white);line-height:1.7;">✓ Kelola spreadsheet</p>
+            <p style="font-size:13px;font-weight:600;color:var(--white);line-height:1.7;">✓ Paham meeting online</p>
+          </div>
+
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;margin-top:20px;font-style:italic;">Itu standar minimal sekarang.</p>
+        </div>
+
+        <div class="slide-progress">
+          <div class="prog-track inv"><div class="prog-fill inv" style="width:28.57%"></div></div>
+          <span class="prog-label inv">2 / 7</span>
+        </div>
+        <div class="slide-arrow inv">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 3 — BISNIS INVISIBLE (RED & WHITE)
+      ══════════════════════════════════════ -->
+      <div class="slide" style="background:linear-gradient(135deg, var(--red) 0%, #F44336 100%);">
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:rgba(255,255,255,0.6);text-transform:uppercase;display:block;margin-bottom:20px;">ALASAN 2</span>
+
+          <div style="font-size:26px;font-weight:900;color:var(--white);line-height:1.15;letter-spacing:-0.7px;margin-bottom:28px;">Bisnis tanpa digital<br>=<span style="opacity:0.85;">bisnis<br>invisible</span></div>
+
+          <div style="width:60px;height:3px;background:var(--white);margin-bottom:24px;opacity:0.5;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:14px;">Lo punya produk bagus?</p>
+
+          <!-- Callout box -->
+          <div style="background:rgba(255,255,255,0.15);border-left:3px solid var(--white);padding:16px 18px;margin-bottom:20px;backdrop-filter:blur(8px);">
+            <p style="font-size:14px;color:var(--white);font-weight:600;line-height:1.65;">Tapi gak ada di Google, gak ada IG, gak ada website?</p>
+          </div>
+
+          <p style="font-size:14px;font-weight:700;color:var(--white);line-height:1.7;">Buat pasar: lo <span style="text-decoration:underline;text-decoration-thickness:2px;">GAK ADA.</span></p>
+
+          <p style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6;margin-top:16px;">Literasi digital = cara lo EKSIS di mata konsumen.</p>
+        </div>
+
+        <div class="slide-progress">
+          <div class="prog-track inv"><div class="prog-fill inv" style="width:42.86%"></div></div>
+          <span class="prog-label inv">3 / 7</span>
+        </div>
+        <div class="slide-arrow inv">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 4 — AVOID SCAMS (BLACK & WHITE)
+      ══════════════════════════════════════ -->
+      <div class="slide" style="background:var(--black);">
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--red);text-transform:uppercase;display:block;margin-bottom:20px;">ALASAN 3</span>
+
+          <div style="font-size:26px;font-weight:900;color:var(--white);line-height:1.15;letter-spacing:-0.7px;margin-bottom:28px;">Biar gak ketipu<br><span style="color:var(--red);">scam, hoaks,<br>marketing abal-abal</span></div>
+
+          <div style="width:40px;height:2px;background:var(--red);margin-bottom:24px;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:18px;font-weight:500;">Literasi digital bikin lo:</p>
+
+          <!-- Checklist -->
+          <div style="margin:0;">
+            <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.8;margin-bottom:12px;">✓ Bedain situs asli vs palsu</p>
+            <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.8;margin-bottom:12px;">✓ Cek ricek info sebelum share</p>
+            <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.8;">✓ Tau mana iklan, mana konten beneran</p>
+          </div>
+
+          <p style="font-size:12px;color:var(--red);line-height:1.6;margin-top:20px;font-weight:600;">Skill ini bisa selamatin dompet dan reputasi lo.</p>
+        </div>
+
+        <div class="slide-progress">
+          <div class="prog-track inv"><div class="prog-fill inv" style="width:57.14%"></div></div>
+          <span class="prog-label inv">4 / 7</span>
+        </div>
+        <div class="slide-arrow inv">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 5 — HEMAT WAKTU (RED & WHITE)
+      ══════════════════════════════════════ -->
+      <div class="slide" style="background:linear-gradient(135deg, var(--red) 0%, #F44336 100%);">
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <span style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:rgba(255,255,255,0.6);text-transform:uppercase;display:block;margin-bottom:20px;">ALASAN 4</span>
+
+          <!-- Big headline -->
+          <div style="font-size:32px;font-weight:900;color:var(--white);line-height:1.0;letter-spacing:-1px;margin-bottom:28px;">Hemat waktu<br>=<br>hemat<span style="display:block;opacity:0.85;">uang</span></div>
+
+          <div style="width:60px;height:3px;background:var(--white);margin-bottom:24px;opacity:0.5;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:18px;font-weight:500;">Orang yang paham digital:</p>
+
+          <!-- Benefits -->
+          <div style="margin:0;">
+            <p style="font-size:13px;font-weight:600;color:var(--white);line-height:1.8;margin-bottom:12px;">→ Automasi repetitive task</p>
+            <p style="font-size:13px;font-weight:600;color:var(--white);line-height:1.8;">→ Pake tools yang tepat</p>
+          </div>
+
+          <p style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6;margin-top:20px;font-style:italic;">Literasi digital = efisiensi.</p>
+        </div>
+
+        <div class="slide-progress">
+          <div class="prog-track inv"><div class="prog-fill inv" style="width:71.43%"></div></div>
+          <span class="prog-label inv">5 / 7</span>
+        </div>
+        <div class="slide-arrow inv">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 6 — CLOSING (BLACK & WHITE)
+      ══════════════════════════════════════ -->
+      <div class="slide" style="background:var(--black);">
+        <!-- Accent line -->
+        <div style="position:absolute;top:0;left:32px;right:32px;height:3px;background:var(--red);"></div>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <!-- Statement -->
+          <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;letter-spacing:-0.8px;margin-bottom:20px;">Literasi digital bukan<br><span style="color:var(--red);">luxury.</span></div>
+
+          <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;letter-spacing:-0.8px;margin-bottom:28px;">Ini <span style="color:var(--red);">necessity.</span></div>
+
+          <div style="width:40px;height:2px;background:var(--red);margin-bottom:24px;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;font-weight:500;">Mau belajar tapi bingung mulai dari mana?</p>
+
+          <p style="font-size:13px;color:var(--red);line-height:1.8;margin-top:16px;font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;">DM aja bingungnya. Gratis ☺️</p>
+        </div>
+
+        <div class="slide-progress">
+          <div class="prog-track inv"><div class="prog-fill inv" style="width:85.71%"></div></div>
+          <span class="prog-label inv">6 / 7</span>
+        </div>
+        <div class="slide-arrow inv">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 7 — CTA (RED & WHITE)
+      ══════════════════════════════════════ -->
+      <div class="slide" style="background:linear-gradient(135deg, var(--red) 0%, #F44336 100%);">
+        <!-- Accent line -->
+        <div style="position:absolute;bottom:56px;left:0;right:0;height:2px;background:rgba(255,255,255,0.2);"></div>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;">
+          <!-- Logo lockup -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:44px;">
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:16px;font-weight:800;flex-shrink:0;">B</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--white);letter-spacing:0.5px;text-transform:uppercase;">BANI RISSET</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.7);">@banirisset</div>
+            </div>
+          </div>
+
+          <!-- Headline -->
+          <div style="font-size:32px;font-weight:900;color:var(--white);line-height:1.1;letter-spacing:-0.9px;margin-bottom:16px;">Literasi<br>digital<br>dimulai<br>dari sini.</div>
+
+          <div style="width:60px;height:3px;background:var(--white);margin-bottom:20px;opacity:0.5;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,0.85);line-height:1.7;margin-bottom:28px;">Follow <strong style="color:var(--white);">@banirisset</strong> untuk konten digital skill lainnya.</p>
+
+          <!-- CTA Button -->
+          <div style="display:inline-flex;align-items:center;gap:10px;padding:13px 28px;background:var(--white);color:var(--red);font-family:'Inter',sans-serif;font-weight:700;font-size:13px;border-radius:4px;width:fit-content;letter-spacing:0.3px;">
+            Follow &amp; Save
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="slide-progress">
+          <div class="prog-track inv"><div class="prog-fill inv" style="width:100%"></div></div>
+          <span class="prog-label inv">7 / 7</span>
+        </div>
+      </div>
+
+    </div><!-- end track -->
+  </div><!-- end viewport -->
+
+  <!-- Dots -->
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active" data-index="0"></div>
+    <div class="ig-dot" data-index="1"></div>
+    <div class="ig-dot" data-index="2"></div>
+    <div class="ig-dot" data-index="3"></div>
+    <div class="ig-dot" data-index="4"></div>
+    <div class="ig-dot" data-index="5"></div>
+    <div class="ig-dot" data-index="6"></div>
+  </div>
+
+  <!-- Actions -->
+  <div class="ig-actions">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+    <svg class="ig-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+  </div>
+
+  <!-- Caption -->
+  <div class="ig-caption">
+    <strong>banirisset</strong> Literasi digital bukan cuma "bisa pakai komputer." Ini skill bertahan hidup. Swipe untuk 4 alasan kenapa.
+    <span class="ig-caption-time">1 April 2026</span>
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('carousel');
+  const allDots = document.querySelectorAll('.ig-dot');
+  const TOTAL = 7;
+  const SLIDE_W = 420;
+  let current = 0;
+  let startX = 0;
+  let isDragging = false;
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(TOTAL - 1, n));
+    track.style.transform = `translateX(${-current * SLIDE_W}px)`;
+    allDots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  viewport.addEventListener('mousedown', e => { startX = e.clientX; isDragging = true; viewport.style.cursor = 'grabbing'; });
+  viewport.addEventListener('mouseup', e => {
+    if (!isDragging) return;
+    isDragging = false;
+    viewport.style.cursor = 'grab';
+    const diff = startX - e.clientX;
+    if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+  });
+  viewport.addEventListener('mouseleave', e => {
+    if (!isDragging) return;
+    isDragging = false;
+    viewport.style.cursor = 'grab';
+  });
+  viewport.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  viewport.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+  }, {passive:true});
+  allDots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.index))));
+</script>
+
+</body>
+</html>

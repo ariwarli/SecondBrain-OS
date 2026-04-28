@@ -1,0 +1,11 @@
+[Unit]
+Description=REED DULL — Proactive Pulse (stale task + CRM scans)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/openclaw/banirisset/scheduler/scripts/proactive_engine.py --mode pulse
+WorkingDirectory=/home/openclaw/banirisset
+EnvironmentFile=/home/openclaw/.openclaw/openclaw-gateway.env
+
+[Install]
+WantedBy=default.target

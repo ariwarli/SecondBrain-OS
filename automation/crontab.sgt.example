@@ -1,0 +1,44 @@
+# Tujuan: contoh cron SGT untuk scheduler Hermes phase 1
+# Caller: operator VPS saat server timezone tetap Singapore
+# Dependensi: automation/run-telegram-job.sh, jobs/*.md, telegram-config.json
+# Main Functions: baseline cron yang aman untuk phase 1
+# Side Effects: mengirim prompt scheduler ke topic Telegram
+
+# OpenClaw scheduler blueprint
+# Server timezone assumed: Asia/Singapore (SGT)
+# User local time: Asia/Jakarta (WIB)
+# Uses a separate scheduler bot to post into the same Telegram topics that OpenClaw watches.
+# Requires:
+# - automation/telegram-config.json
+# - TELEGRAM_RUNNER_ENV or automation/telegram-runner.env
+# - automation/run-telegram-job.sh
+
+# Morning brief
+0 8 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh morning_brief /Users/banirisset/banirisset/automation/jobs/morning-brief.md updates
+
+# CRM review
+0 9 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh crm_review /Users/banirisset/banirisset/automation/jobs/crm-review.md personal-crm
+
+# Security audit
+# Phase 1: keep manual until security lane is verified end-to-end.
+# 0 10 * * * openclaw security audit --deep
+
+# Content nag
+0 11 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh content_nag_1 /Users/banirisset/banirisset/automation/jobs/content-nag.md content
+0 14 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh content_nag_2 /Users/banirisset/banirisset/automation/jobs/content-nag.md content
+0 17 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh content_nag_3 /Users/banirisset/banirisset/automation/jobs/content-nag.md content
+
+# Silent heartbeats every 4 hours during active window
+30 11 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh heartbeat_1 /Users/banirisset/banirisset/automation/jobs/heartbeat.md updates
+30 15 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh heartbeat_2 /Users/banirisset/banirisset/automation/jobs/heartbeat.md updates
+30 19 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh heartbeat_3 /Users/banirisset/banirisset/automation/jobs/heartbeat.md updates
+30 23 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh heartbeat_4 /Users/banirisset/banirisset/automation/jobs/heartbeat.md updates
+
+# End of day summary
+0 19 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh end_of_day_summary /Users/banirisset/banirisset/automation/jobs/end-of-day-summary.md updates
+
+# Overnight staggered subagents
+# Phase 1: manual trigger only.
+# 0 2 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh overnight_research /Users/banirisset/banirisset/automation/jobs/overnight-research.md tasks
+# 30 2 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh overnight_leads /Users/banirisset/banirisset/automation/jobs/overnight-leads.md personal-crm
+# 0 3 * * * /Users/banirisset/banirisset/automation/run-telegram-job.sh overnight_builder /Users/banirisset/banirisset/automation/jobs/overnight-builder.md tasks

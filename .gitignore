@@ -1,0 +1,29 @@
+# OpenClaw runtime — VPS only, jangan disync dari Mac
+main/
+.openclaw/
+state/
+
+# Logs & cache
+automation/logs/
+automation/__pycache__/
+openclaw/scripts/__pycache__/
+**/__pycache__/
+*.pyc
+*.log
+
+# Secrets
+*.env
+telegram-runner.env
+telegram-config.json
+
+# OS
+.DS_Store
+
+# Workspace artifacts / generated outputs
+banirisset.com.wsa
+flyer_ai.html
+clients/**/deliverables/
+projects/tool-lab/agent-os/artifacts/
+projects/tool-lab/agent-os/runs/
+projects/tool-lab/agent-os/state.sqlite3
+projects/tool-lab/agent-os/evals/closed_loop_demo-last.json

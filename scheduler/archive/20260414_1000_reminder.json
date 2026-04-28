@@ -1,0 +1,12 @@
+{
+  "id": "r_1192_1776089985",
+  "source_message_id": 1192,
+  "source_topic": "inbox",
+  "created_at": "2026-04-13 21:19:45",
+  "target_at": "2026-04-14 10:00",
+  "target_timestamp": 1776135600,
+  "description": "malem ini, minum obat",
+  "original_text": "Buat tes reminder jam 10 malem ini, minum obat",
+  "delivered": true,
+  "delivered_at": "2026-04-14 10:10:01"
+}

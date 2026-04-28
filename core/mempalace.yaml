@@ -1,0 +1,22 @@
+wing: banirisset
+rooms:
+- name: clients
+  description: Files from clients/
+- name: brand_os___bani_risset
+  description: Files from Brand OS - Bani Risset/
+- name: prompt_refinement
+  description: Files from prompt-refinement/
+- name: n8n
+  description: Files from n8n/
+- name: ops
+  description: Files from ops/
+- name: personal_brand
+  description: Files from personal-brand/
+- name: documentation
+  description: Files from docs/
+- name: scripts
+  description: Files from scripts/
+- name: research
+  description: Files from research/
+- name: general
+  description: Files that don't fit other rooms

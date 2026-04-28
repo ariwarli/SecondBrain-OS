@@ -1,0 +1,164 @@
+# Tujuan: source of truth runtime spec REED menuju feature-class parity Hermes
+# Caller: operator runtime, builder, dan agent yang audit/migrasi REED
+# Dependensi: docs/REED_RUNTIME_ARCHITECTURE.md, docs/REED_MEMORY_AND_LEARNING.md, docs/INBOX_ROUTING.md
+# Main Functions: mendefinisikan capability, service contract, autonomy tier, channel, cron, dan migration flags
+# Side Effects: jadi spec implementasi menggantikan blueprint OpenClaw yang terfragmentasi
+
+version: 1
+mode: hermes_style_reed
+deployment_phase: phase_1_single_vps
+
+source_of_truth:
+  runtime_architecture: docs/REED_RUNTIME_ARCHITECTURE.md
+  memory_and_learning: docs/REED_MEMORY_AND_LEARNING.md
+  inbox_routing: docs/INBOX_ROUTING.md
+  migration_map: docs/REED_HERMES_MIGRATION_MAP.md
+
+runtime:
+  gateway:
+    enabled: true
+    canonical: true
+    owns:
+      - sessions
+      - inbound_routing
+      - outbound_delivery
+      - cron_tick
+  agent_core:
+    enabled: true
+    owns:
+      - context_assembly
+      - tool_routing
+      - skill_loading
+      - approvals
+      - subagent_delegation
+  scheduler:
+    enabled: true
+    internal_subsystem: true
+  memory:
+    enabled: true
+    tiers:
+      - operational_memory
+      - session_recall
+      - canon_library
+  observability:
+    enabled: true
+    outputs:
+      - logs
+      - audit
+      - alerts
+
+channels:
+  primary:
+    - telegram
+  planned:
+    - email
+    - voice
+    - web_ingestion
+  rule: "Architecture must be multi-channel ready even if Telegram activates first"
+
+memory:
+  operational_memory:
+    enabled: true
+    bounded: true
+    purpose: "Boot-time agent memory for behavior-critical facts"
+  session_recall:
+    enabled: true
+    searchable: true
+    purpose: "Past conversation recall and traceability"
+  canon_library:
+    enabled: true
+    backend: markdown_wiki
+    path: knowledge-base/wiki
+    purpose: "Long-lived library, journal, SOPs, durable knowledge"
+
+learning_loop:
+  enabled: true
+  phases:
+    - observe
+    - extract
+    - consolidate
+    - reuse
+    - improve
+  outputs:
+    - memory_updates
+    - skill_candidates
+    - canon_promotions
+
+skills:
+  enabled: true
+  classes:
+    - system
+    - domain
+  examples:
+    system:
+      - inbox-routing
+      - crm-review
+      - reminder-closure
+      - knowledge-promotion
+      - scheduler-health
+    domain:
+      - brand-content
+      - seo-research
+      - personal-crm
+      - website-audit
+
+execution:
+  backends:
+    - local_trusted
+    - docker_sandbox
+  future_backends:
+    - ssh
+  autonomy_tiers:
+    autonomous_internal:
+      - routing
+      - summaries
+      - memory_updates
+      - research_synthesis
+    guarded_internal:
+      - file_edits
+      - builds
+      - internal_scripts
+      - scheduled_internal_jobs
+    approval_gated:
+      - destructive_shell
+      - public_posting
+      - outbound_outreach
+      - production_config_changes
+      - sensitive_service_restart
+
+cron:
+  unified_scheduler: true
+  jobs:
+    - morning_brief
+    - crm_review
+    - content_nag
+    - heartbeat
+    - end_of_day_summary
+    - overnight_research
+    - overnight_builder
+    - reminder_processing
+  rules:
+    - "Cron jobs run in fresh sessions"
+    - "Cron jobs cannot recursively create more cron jobs"
+    - "done closes the relevant reminder/task loop"
+
+approvals:
+  mode: aggressive_with_hard_gates
+  hard_gates:
+    - destructive_actions
+    - public_external_actions
+    - irreversible_state_change
+    - sensitive_data_exposure
+
+migration:
+  keep_as_input:
+    - openclaw.md
+    - automation/README.md
+    - automation/schedule.yaml
+    - automation/jobs
+    - scheduler/scripts
+    - ops/subagents/README.md
+  retire_model_mental:
+    - "REED DULL as separate system"
+    - "cron example files as final implementation"
+    - "single narrative file as only runtime source of truth"

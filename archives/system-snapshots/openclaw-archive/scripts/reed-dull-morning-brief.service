@@ -1,0 +1,11 @@
+[Unit]
+Description=REED DULL — Morning Brief (08:00 WIB)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/openclaw/banirisset/scheduler/scripts/proactive_engine.py --mode daily_brief
+WorkingDirectory=/home/openclaw/banirisset
+EnvironmentFile=/home/openclaw/.openclaw/openclaw-gateway.env
+
+[Install]
+WantedBy=default.target

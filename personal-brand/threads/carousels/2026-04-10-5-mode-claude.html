@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carousel — 5 Mode Kerja Claude | @banirisset</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand:      #D97706;
+    --brand-light:#FCD34D;
+    --brand-dark: #B45309;
+    --light-bg:   #FFFBEB;
+    --light-border:#FDE68A;
+    --dark-bg:    #1C1000;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'Inter',sans-serif;
+    background:#E0DDD8;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    min-height:100vh;
+    padding:32px 24px;
+  }
+
+  .ig-frame {
+    width:420px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 8px 40px rgba(0,0,0,0.13);
+    overflow:hidden;
+    font-family:'Inter',sans-serif;
+  }
+
+  .ig-header {
+    display:flex;
+    align-items:center;
+    padding:12px 16px;
+    gap:10px;
+    border-bottom:1px solid #F0F0F0;
+  }
+
+  .ig-avatar {
+    width:36px; height:36px; border-radius:50%;
+    background:linear-gradient(135deg,#833AB4,#FD1D1D,#FCAF45);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:14px; font-weight:800; flex-shrink:0;
+  }
+
+  .ig-header-text { flex:1; }
+  .ig-username  { font-size:13px; font-weight:600; color:#1C1000; }
+  .ig-subtitle  { font-size:11px; color:rgba(0,0,0,0.4); }
+  .ig-more      { font-size:20px; color:#1C1000; cursor:pointer; line-height:1; padding-bottom:4px; }
+
+  .carousel-viewport {
+    width:420px; aspect-ratio:4/5;
+    overflow:hidden; cursor:grab;
+    position:relative; user-select:none;
+  }
+
+  .carousel-track {
+    display:flex;
+    width:calc(420px * 9);
+    height:100%;
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+  }
+
+  .slide {
+    width:420px; height:525px;
+    flex-shrink:0; position:relative;
+    overflow:hidden; font-family:'Inter',sans-serif;
+  }
+
+  /* Progress bar */
+  .sp { position:absolute; bottom:0; left:0; right:0; padding:16px 28px 20px; z-index:10; display:flex; align-items:center; gap:10px; }
+  .pt { flex:1; height:3px; background:rgba(0,0,0,0.08); border-radius:2px; overflow:hidden; }
+  .pt.d { background:rgba(255,255,255,0.12); }
+  .pf { height:100%; background:var(--brand); border-radius:2px; }
+  .pf.d { background:rgba(255,255,255,0.55); }
+  .pl { font-size:11px; color:rgba(0,0,0,0.28); font-weight:500; white-space:nowrap; }
+  .pl.d { color:rgba(255,255,255,0.35); }
+
+  /* Arrow */
+  .arr { position:absolute; right:0; top:0; bottom:0; width:48px; z-index:9; display:flex; align-items:center; justify-content:center; background:linear-gradient(to right,transparent,rgba(0,0,0,0.04)); }
+  .arr.d { background:linear-gradient(to right,transparent,rgba(0,0,0,0.18)); }
+
+  /* IG chrome */
+  .ig-dots { display:flex; justify-content:center; gap:5px; padding:10px 0; }
+  .ig-dot  { width:6px; height:6px; border-radius:50%; background:#D1D5DB; transition:all .2s; cursor:pointer; }
+  .ig-dot.active { background:var(--brand); width:16px; border-radius:3px; }
+
+  .ig-actions { display:flex; align-items:center; padding:8px 16px 4px; gap:16px; }
+  .ig-actions svg { width:24px; height:24px; color:#1C1000; }
+  .ig-bookmark { margin-left:auto; }
+
+  .ig-caption { padding:4px 16px 16px; font-size:13px; line-height:1.5; color:#1C1000; }
+  .ig-caption strong { font-weight:600; }
+  .ig-caption-time { display:block; margin-top:6px; font-size:11px; color:rgba(0,0,0,0.35); }
+</style>
+</head>
+<body>
+
+<!-- SVG Symbols -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="spark" viewBox="0 0 100 100">
+      <g transform="translate(50,50)">
+        <path d="M0,-44 C5,-29 5,29 0,44 C-5,29 -5,-29 0,-44Z" fill="#374151" transform="rotate(0)"/>
+        <path d="M0,-44 C5,-29 5,29 0,44 C-5,29 -5,-29 0,-44Z" fill="#374151" transform="rotate(45)"/>
+        <path d="M0,-44 C5,-29 5,29 0,44 C-5,29 -5,-29 0,-44Z" fill="#374151" transform="rotate(90)"/>
+        <path d="M0,-44 C5,-29 5,29 0,44 C-5,29 -5,-29 0,-44Z" fill="#374151" transform="rotate(135)"/>
+      </g>
+    </symbol>
+    <symbol id="plus" viewBox="0 0 100 100">
+      <line x1="50" y1="8" x2="50" y2="92" stroke="#374151" stroke-width="5" stroke-linecap="round"/>
+      <line x1="8" y1="50" x2="92" y2="50" stroke="#374151" stroke-width="5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="diamond" viewBox="0 0 100 100">
+      <polygon points="50,6 94,50 50,94 6,50" fill="#374151"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="ig-frame">
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-header-text">
+      <div class="ig-username">banirisset</div>
+      <div class="ig-subtitle">AI & Digital Marketing Consultant</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <div class="carousel-viewport" id="carousel">
+    <div class="carousel-track" id="track">
+
+      <!-- ══ SLIDE 1 — HERO (LIGHT) ══ -->
+      <div class="slide" style="background:var(--light-bg);">
+        <svg style="position:absolute;top:-55px;right:-35px;width:210px;height:210px;opacity:.065;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:85px;left:-25px;width:155px;height:155px;opacity:.065;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:190px;right:34px;width:18px;height:18px;opacity:.09;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;top:295px;left:42px;width:36px;height:36px;opacity:.08;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+        <svg style="position:absolute;bottom:115px;right:70px;width:11px;height:11px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <!-- Logo lockup -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:40px;">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0;">B</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark-bg);letter-spacing:.3px;">BANI RISSET</div>
+              <div style="font-size:11px;color:rgba(0,0,0,.45);">@banirisset</div>
+            </div>
+          </div>
+
+          <!-- Pill badge -->
+          <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(217,119,6,.1);border-radius:20px;margin-bottom:22px;width:fit-content;">
+            <div style="width:5px;height:5px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+            <span style="font-size:10px;font-weight:700;letter-spacing:1.8px;color:var(--brand);text-transform:uppercase;">TOOLS & WORKFLOW</span>
+          </div>
+
+          <!-- Headline -->
+          <div style="font-size:36px;font-weight:900;color:var(--dark-bg);line-height:1.08;letter-spacing:-1.1px;margin-bottom:22px;">Lo bayar<br>Claude Pro.<br>Tapi cuma<br>pake <span style="color:var(--brand);">Chat.</span></div>
+
+          <p style="font-size:14px;color:rgba(0,0,0,.5);line-height:1.65;">Itu kayak beli MacBook Pro<br>cuma buat buka YouTube.</p>
+        </div>
+
+        <div class="sp"><div class="pt"><div class="pf" style="width:11.11%"></div></div><span class="pl">1 / 9</span></div>
+        <div class="arr"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(0,0,0,.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 2 — PROBLEM (DARK) ══ -->
+      <div class="slide" style="background:var(--dark-bg);">
+        <svg style="position:absolute;top:-45px;left:-55px;width:215px;height:215px;opacity:.07;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:85px;right:-30px;width:165px;height:165px;opacity:.06;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:220px;right:36px;width:14px;height:14px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;top:315px;left:38px;width:40px;height:40px;opacity:.08;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+        <svg style="position:absolute;top:145px;left:80px;width:10px;height:10px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:var(--brand);text-transform:uppercase;display:block;margin-bottom:22px;">MASALAHNYA</span>
+
+          <div style="font-size:28px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-.7px;margin-bottom:26px;">Ada 5 mode kerja Claude.<br>Kebanyakan orang<br>cuma kenal <span style="color:var(--brand-light);">satu.</span></div>
+
+          <div style="width:40px;height:2px;background:var(--brand);margin-bottom:24px;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:14px;">Tiap mode punya fungsi yang beda.</p>
+          <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;">Salah pilih mode → output biasa-biasa aja.<br>Pilih yang tepat → kualitas naik <span style="color:#fff;font-weight:700;">DRASTIS.</span></p>
+        </div>
+
+        <div class="sp"><div class="pt d"><div class="pf d" style="width:22.22%"></div></div><span class="pl d">2 / 9</span></div>
+        <div class="arr d"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 3 — MODE 1: CHAT (LIGHT) ══ -->
+      <div class="slide" style="background:var(--light-bg);">
+        <svg style="position:absolute;top:-50px;right:-25px;width:190px;height:190px;opacity:.065;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:75px;left:-28px;width:140px;height:140px;opacity:.065;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:205px;right:30px;width:16px;height:16px;opacity:.09;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;bottom:125px;left:44px;width:32px;height:32px;opacity:.08;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <!-- Mode label -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(0,0,0,.35);text-transform:uppercase;">MODE 01</span>
+            <div style="flex:1;height:1px;background:var(--light-border);"></div>
+          </div>
+
+          <div style="font-size:44px;font-weight:900;color:var(--brand);line-height:1;letter-spacing:-1.5px;margin-bottom:8px;">CHAT</div>
+          <div style="font-size:16px;font-weight:700;color:var(--dark-bg);margin-bottom:22px;">→ Kerja harian yang cepat</div>
+
+          <div style="width:40px;height:2px;background:var(--brand);margin-bottom:22px;opacity:.5;"></div>
+
+          <!-- Use cases -->
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--light-border);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:var(--dark-bg);">Brainstorming & draft caption</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--light-border);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:var(--dark-bg);">Revisi teks & ringkasan meeting</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--light-border);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:var(--dark-bg);">Tanya-jawab singkat</span>
+            </div>
+          </div>
+
+          <!-- Rule box -->
+          <div style="margin-top:16px;padding:14px 16px;background:rgba(217,119,6,.08);border-radius:10px;border-left:3px solid var(--brand);">
+            <p style="font-size:12px;font-weight:700;color:var(--brand);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">Aturan wajib</p>
+            <p style="font-size:12px;color:rgba(0,0,0,.6);line-height:1.55;">Buat chat baru di dalam PROJECT yang tepat — bukan di Chat yang ngambang tanpa konteks.</p>
+          </div>
+        </div>
+
+        <div class="sp"><div class="pt"><div class="pf" style="width:33.33%"></div></div><span class="pl">3 / 9</span></div>
+        <div class="arr"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(0,0,0,.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 4 — MODE 2: PROJECTS (DARK) ══ -->
+      <div class="slide" style="background:var(--dark-bg);">
+        <svg style="position:absolute;top:-35px;right:-45px;width:200px;height:200px;opacity:.07;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:80px;left:-35px;width:155px;height:155px;opacity:.06;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:200px;right:38px;width:13px;height:13px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;top:310px;left:36px;width:38px;height:38px;opacity:.08;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+        <svg style="position:absolute;top:135px;left:78px;width:10px;height:10px;opacity:.09;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.3);text-transform:uppercase;">MODE 02</span>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,.1);"></div>
+          </div>
+
+          <div style="font-size:44px;font-weight:900;color:var(--brand-light);line-height:1;letter-spacing:-1.5px;margin-bottom:8px;">PROJECTS</div>
+          <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:22px;">→ Rumah permanen per domain kerja</div>
+
+          <div style="width:40px;height:2px;background:var(--brand);margin-bottom:22px;"></div>
+
+          <p style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:18px;">Simpan konteks, instruksi khusus, dan riwayat diskusi dalam satu tempat.</p>
+
+          <!-- Examples -->
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="padding:10px 14px;background:rgba(217,119,6,.12);border-radius:8px;border:1px solid rgba(217,119,6,.2);">
+              <span style="font-size:12px;font-weight:600;color:var(--brand-light);">📁 Project "Konten Threads"</span>
+            </div>
+            <div style="padding:10px 14px;background:rgba(217,119,6,.12);border-radius:8px;border:1px solid rgba(217,119,6,.2);">
+              <span style="font-size:12px;font-weight:600;color:var(--brand-light);">📁 Project "Klien A"</span>
+            </div>
+            <div style="padding:10px 14px;background:rgba(217,119,6,.12);border-radius:8px;border:1px solid rgba(217,119,6,.2);">
+              <span style="font-size:12px;font-weight:600;color:var(--brand-light);">📁 Project "Riset AI 2026"</span>
+            </div>
+          </div>
+
+          <p style="margin-top:18px;font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Setelah Claude paham konteks lo? Kualitas output naik <strong style="color:#fff;">DRASTIS.</strong></p>
+        </div>
+
+        <div class="sp"><div class="pt d"><div class="pf d" style="width:44.44%"></div></div><span class="pl d">4 / 9</span></div>
+        <div class="arr d"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 5 — MODE 3: COWORK (GRADIENT) ══ -->
+      <div class="slide" style="background:linear-gradient(165deg, var(--brand-dark) 0%, var(--brand) 55%, var(--brand-light) 100%);">
+        <svg style="position:absolute;top:-55px;right:-35px;width:230px;height:230px;opacity:.07;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:75px;left:-40px;width:170px;height:170px;opacity:.06;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:225px;right:42px;width:16px;height:16px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;top:330px;left:40px;width:36px;height:36px;opacity:.09;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+        <svg style="position:absolute;top:155px;left:68px;width:12px;height:12px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.6);text-transform:uppercase;">MODE 03</span>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,.2);"></div>
+          </div>
+
+          <div style="font-size:44px;font-weight:900;color:#fff;line-height:1;letter-spacing:-1.5px;margin-bottom:8px;">COWORK</div>
+          <div style="font-size:16px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:22px;">→ Rutinitas & thinking partner</div>
+
+          <div style="width:40px;height:2px;background:rgba(255,255,255,.4);margin-bottom:22px;"></div>
+
+          <!-- Use cases -->
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.15);">
+              <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.7);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:#fff;">Daily briefing & weekly sync</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.15);">
+              <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.7);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:#fff;">Thinking partner harian</span>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;padding:14px 16px;background:rgba(0,0,0,.15);border-radius:10px;border-left:3px solid rgba(255,255,255,.5);">
+            <p style="font-size:12px;color:rgba(255,255,255,.8);line-height:1.55;">Fokuskan ke ritme kerja lo — bukan ke random request. Bukan tempat semua jenis kerja masuk.</p>
+          </div>
+        </div>
+
+        <div class="sp"><div class="pt d"><div class="pf d" style="width:55.55%"></div></div><span class="pl d">5 / 9</span></div>
+        <div class="arr" style="background:linear-gradient(to right,transparent,rgba(0,0,0,.1));"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 6 — MODE 4: CODE (DARK) ══ -->
+      <div class="slide" style="background:var(--dark-bg);">
+        <svg style="position:absolute;top:-40px;left:-50px;width:205px;height:205px;opacity:.07;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:90px;right:-28px;width:158px;height:158px;opacity:.06;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:210px;right:34px;width:14px;height:14px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;top:305px;left:34px;width:38px;height:38px;opacity:.08;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+        <svg style="position:absolute;top:140px;left:82px;width:10px;height:10px;opacity:.09;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.3);text-transform:uppercase;">MODE 04</span>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,.1);"></div>
+          </div>
+
+          <div style="font-size:44px;font-weight:900;color:var(--brand-light);line-height:1;letter-spacing:-1.5px;margin-bottom:8px;">CODE</div>
+          <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:22px;">→ Urusan file &amp; teknis</div>
+
+          <div style="width:40px;height:2px;background:var(--brand);margin-bottom:22px;"></div>
+
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:#fff;">Folder structure &amp; automasi</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:#fff;">Integrasi tools &amp; generator</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:#fff;">Notion, MCP, generator prompt</span>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;padding:14px 16px;background:rgba(217,119,6,.1);border-radius:10px;border-left:3px solid var(--brand);">
+            <p style="font-size:12px;color:rgba(255,255,255,.7);line-height:1.55;"><strong style="color:var(--brand-light);">Satu use case per sesi.</strong> Jangan campur.</p>
+          </div>
+        </div>
+
+        <div class="sp"><div class="pt d"><div class="pf d" style="width:66.66%"></div></div><span class="pl d">6 / 9</span></div>
+        <div class="arr d"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 7 — MODE 5: ARTIFACTS (LIGHT) ══ -->
+      <div class="slide" style="background:var(--light-bg);">
+        <svg style="position:absolute;top:-48px;right:-28px;width:185px;height:185px;opacity:.065;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:80px;left:-22px;width:145px;height:145px;opacity:.065;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:205px;right:32px;width:17px;height:17px;opacity:.09;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;bottom:118px;left:44px;width:34px;height:34px;opacity:.08;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(0,0,0,.35);text-transform:uppercase;">MODE 05</span>
+            <div style="flex:1;height:1px;background:var(--light-border);"></div>
+          </div>
+
+          <div style="font-size:44px;font-weight:900;color:var(--brand);line-height:1;letter-spacing:-1.5px;margin-bottom:8px;">ARTIFACTS</div>
+          <div style="font-size:16px;font-weight:700;color:var(--dark-bg);margin-bottom:22px;">→ Simpan hasil jadi yang reusable</div>
+
+          <div style="width:40px;height:2px;background:var(--brand);margin-bottom:22px;opacity:.5;"></div>
+
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--light-border);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:var(--dark-bg);">Template brief &amp; SOP</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--light-border);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:var(--dark-bg);">Checklist &amp; prompt pack</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--light-border);">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;"></div>
+              <span style="font-size:13px;font-weight:600;color:var(--dark-bg);">Dokumen final apapun</span>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;padding:14px 16px;background:rgba(217,119,6,.08);border-radius:10px;border-left:3px solid var(--brand);">
+            <p style="font-size:12px;color:rgba(0,0,0,.6);line-height:1.55;">Selesai dibuat → langsung simpan sebagai Artifact. Output penting lo gak tenggelam di chat.</p>
+          </div>
+        </div>
+
+        <div class="sp"><div class="pt"><div class="pf" style="width:77.77%"></div></div><span class="pl">7 / 9</span></div>
+        <div class="arr"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(0,0,0,.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 8 — SUMMARY (DARK) ══ -->
+      <div class="slide" style="background:var(--dark-bg);">
+        <svg style="position:absolute;top:-40px;right:-50px;width:200px;height:200px;opacity:.07;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:70px;left:-35px;width:160px;height:160px;opacity:.06;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:195px;right:36px;width:13px;height:13px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;top:295px;left:36px;width:36px;height:36px;opacity:.08;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:flex-start;position:relative;z-index:1;">
+          <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:var(--brand);text-transform:uppercase;display:block;margin-bottom:18px;">RINGKASAN</span>
+
+          <div style="font-size:22px;font-weight:900;color:#fff;line-height:1.2;letter-spacing:-.5px;margin-bottom:22px;">Lima mode.<br>Lima fungsi berbeda.</div>
+
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);">
+              <span style="font-size:12px;font-weight:800;color:var(--brand);min-width:72px;">CHAT</span>
+              <span style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;">Kerja harian cepat, dalam project yang tepat</span>
+            </div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);">
+              <span style="font-size:12px;font-weight:800;color:var(--brand);min-width:72px;">PROJECTS</span>
+              <span style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;">Rumah permanen, simpan konteks</span>
+            </div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);">
+              <span style="font-size:12px;font-weight:800;color:var(--brand);min-width:72px;">COWORK</span>
+              <span style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;">Rutinitas terjadwal & thinking partner</span>
+            </div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);">
+              <span style="font-size:12px;font-weight:800;color:var(--brand);min-width:72px;">CODE</span>
+              <span style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;">Urusan file, automasi, integrasi</span>
+            </div>
+            <div style="display:flex;gap:12px;padding:10px 0;">
+              <span style="font-size:12px;font-weight:800;color:var(--brand);min-width:72px;">ARTIFACTS</span>
+              <span style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;">Hasil jadi yang reusable</span>
+            </div>
+          </div>
+
+          <p style="margin-top:18px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.6;">Output biasa-biasa aja? Kemungkinan besar: <strong style="color:rgba(255,255,255,.7);">salah pilih mode.</strong></p>
+        </div>
+
+        <div class="sp"><div class="pt d"><div class="pf d" style="width:88.88%"></div></div><span class="pl d">8 / 9</span></div>
+        <div class="arr d"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- ══ SLIDE 9 — CTA (GRADIENT) ══ -->
+      <div class="slide" style="background:linear-gradient(165deg, var(--brand-dark) 0%, var(--brand) 55%, var(--brand-light) 100%);">
+        <svg style="position:absolute;top:-65px;right:-45px;width:260px;height:260px;opacity:.07;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;bottom:-45px;left:-50px;width:225px;height:225px;opacity:.07;" viewBox="0 0 100 100"><use href="#spark"/></svg>
+        <svg style="position:absolute;top:42px;left:30px;width:16px;height:16px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;top:195px;right:42px;width:40px;height:40px;opacity:.09;" viewBox="0 0 100 100"><use href="#plus"/></svg>
+        <svg style="position:absolute;bottom:145px;right:72px;width:12px;height:12px;opacity:.1;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+        <svg style="position:absolute;bottom:215px;left:60px;width:13px;height:13px;opacity:.09;" viewBox="0 0 100 100"><use href="#diamond"/></svg>
+
+        <div style="padding:48px 32px 72px;height:100%;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;">
+          <!-- Logo lockup -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:40px;">
+            <div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0;">B</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#fff;letter-spacing:.3px;">BANI RISSET</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.65);">@banirisset</div>
+            </div>
+          </div>
+
+          <div style="font-size:30px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-.8px;margin-bottom:16px;">Tata ulang<br>workflow Claude lo.<br>Rasanya<br>beda banget.</div>
+
+          <div style="width:48px;height:3px;background:rgba(255,255,255,.4);margin-bottom:20px;"></div>
+
+          <p style="font-size:14px;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:28px;">Follow <strong style="color:#fff;">@banirisset</strong> untuk konten kayak gini tiap hari.</p>
+
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:#fff;color:var(--brand-dark);font-family:'Inter',sans-serif;font-weight:700;font-size:13px;border-radius:28px;width:fit-content;letter-spacing:.2px;">
+            Simpen &amp; Share
+          </div>
+        </div>
+
+        <div class="sp"><div class="pt d"><div class="pf d" style="width:100%"></div></div><span class="pl d">9 / 9</span></div>
+      </div>
+
+    </div><!-- end track -->
+  </div><!-- end viewport -->
+
+  <!-- Dots -->
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active" data-index="0"></div>
+    <div class="ig-dot" data-index="1"></div>
+    <div class="ig-dot" data-index="2"></div>
+    <div class="ig-dot" data-index="3"></div>
+    <div class="ig-dot" data-index="4"></div>
+    <div class="ig-dot" data-index="5"></div>
+    <div class="ig-dot" data-index="6"></div>
+    <div class="ig-dot" data-index="7"></div>
+    <div class="ig-dot" data-index="8"></div>
+  </div>
+
+  <!-- Actions -->
+  <div class="ig-actions">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+    <svg class="ig-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+  </div>
+
+  <!-- Caption -->
+  <div class="ig-caption">
+    <strong>banirisset</strong> Udah bayar Claude Pro tapi hasilnya biasa-biasa aja? Kemungkinan besar salah pilih mode. Swipe →
+    <span class="ig-caption-time">10 April 2026</span>
+  </div>
+</div>
+
+<script>
+  const track   = document.getElementById('track');
+  const viewport = document.getElementById('carousel');
+  const allDots = document.querySelectorAll('.ig-dot');
+  const TOTAL   = 9;
+  const SLIDE_W = 420;
+  let current   = 0;
+  let startX    = 0;
+  let isDragging = false;
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(TOTAL - 1, n));
+    track.style.transform = `translateX(${-current * SLIDE_W}px)`;
+    allDots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  viewport.addEventListener('mousedown', e => { startX = e.clientX; isDragging = true; viewport.style.cursor = 'grabbing'; });
+  viewport.addEventListener('mouseup',   e => {
+    if (!isDragging) return;
+    isDragging = false; viewport.style.cursor = 'grab';
+    const diff = startX - e.clientX;
+    if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+  });
+  viewport.addEventListener('mouseleave', () => { isDragging = false; viewport.style.cursor = 'grab'; });
+  viewport.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  viewport.addEventListener('touchend',   e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+  }, {passive:true});
+  allDots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.index))));
+</script>
+</body>
+</html>

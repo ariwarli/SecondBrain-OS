@@ -1,0 +1,11 @@
+[Unit]
+Description=REED DULL — Weekly Knowledge Gap Timer (Friday 17:00 WIB)
+
+[Timer]
+OnCalendar=Fri *-*-* 17:00:00
+AccuracySec=1min
+Persistent=true
+Unit=reed-dull-weekly-gap.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,16 @@
+{
+  "goal_title": "Create a verified artifact",
+  "task": {
+    "description": "Write a deterministic artifact file",
+    "task_type": "write_file",
+    "payload": {
+      "path": "artifacts/demo-output.txt",
+      "content": "agent-os demo artifact\n"
+    },
+    "verification_spec": {
+      "type": "file_contains",
+      "path": "artifacts/demo-output.txt",
+      "contains": "demo artifact"
+    }
+  }
+}

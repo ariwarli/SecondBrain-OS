@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:godmodechatgpt.notion.site)",
+      "Bash(jq -r .[0].text)",
+      "Read(//tmp/**)",
+      "Bash(grep -E \"^#{1,4} \" /tmp/guide_text.txt)",
+      "Bash(grep -E \"^#{1,5}\")",
+      "Bash(grep -E \"^#{1,5}|^- |^[0-9]+\\\\.|^\\\\*\\\\*|Prompt|Framework|Technique|Method|Principle|Tip\")"
+    ]
+  }
+}

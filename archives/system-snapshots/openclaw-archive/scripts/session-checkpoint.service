@@ -1,0 +1,16 @@
+[Unit]
+Description=REED Session Checkpoint Worker (every 20 chats)
+After=openclaw-gateway.service
+Wants=openclaw-gateway.service
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/openclaw/banirisset/openclaw/scripts/session_checkpoint_worker.py --once
+WorkingDirectory=/home/openclaw/banirisset
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/home/openclaw/banirisset /home/openclaw/.openclaw

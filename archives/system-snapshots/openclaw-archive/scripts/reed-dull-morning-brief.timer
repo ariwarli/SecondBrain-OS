@@ -1,0 +1,11 @@
+[Unit]
+Description=REED DULL — Morning Brief Timer (daily 08:00 WIB)
+
+[Timer]
+OnCalendar=*-*-* 08:00:00
+AccuracySec=1min
+Persistent=true
+Unit=reed-dull-morning-brief.service
+
+[Install]
+WantedBy=timers.target

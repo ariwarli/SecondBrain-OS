@@ -1,0 +1,10 @@
+[Unit]
+Description=Run REED runtime cron tick every minute
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+Unit=reed-runtime-tick.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO vs GEO — Editorial Dark — @banirisset</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --dark:  #0D0D0D;
+  --red:   #D93025;
+  --cream: #F2EBD9;
+  --white: #FFFFFF;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #1A1A1A;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+/* IG Frame */
+.ig-frame {
+  width: 420px;
+  background: #111;
+  border-radius: 14px;
+  box-shadow: 0 12px 60px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+.ig-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #222;
+  background: #111;
+}
+.ig-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 13px; font-weight: 800; flex-shrink: 0;
+}
+.ig-info { flex: 1; }
+.ig-handle { font-size: 12px; font-weight: 700; color: #fff; }
+.ig-sub    { font-size: 10px; color: #555; }
+.ig-more   { font-size: 20px; color: #555; line-height: 1; letter-spacing: 1px; }
+
+/* Carousel */
+.carousel-viewport {
+  width: 420px; height: 525px;
+  overflow: hidden; position: relative;
+  cursor: grab; user-select: none;
+}
+.carousel-viewport:active { cursor: grabbing; }
+.carousel-track {
+  display: flex; height: 100%;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* Slide */
+.slide {
+  width: 420px; height: 525px;
+  flex-shrink: 0; position: relative;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.s-dark  { background: var(--dark); }
+.s-red   { background: var(--red); }
+.s-cream { background: var(--cream); }
+
+/* Content */
+.sc {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: flex-start;
+  padding: 48px 36px 80px;
+  position: relative; z-index: 2;
+}
+.sc.mid { justify-content: center; }
+
+/* Brand mark — every slide */
+.brand-mark {
+  position: absolute;
+  bottom: 20px; left: 36px;
+  z-index: 10;
+  display: flex; align-items: center; gap: 8px;
+}
+.bm-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 8px; font-weight: 900;
+  flex-shrink: 0;
+}
+.bm-dot.outline {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.35);
+}
+.bm-dot.dk-outline {
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.25);
+}
+.bm-name { font-size: 11px; font-weight: 700; letter-spacing: 0.3px; }
+.bm-name.wh { color: rgba(255,255,255,0.38); }
+.bm-name.dk { color: rgba(0,0,0,0.38); }
+
+/* Typography */
+.label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.label.wh  { color: rgba(255,255,255,0.45); }
+.label.red { color: rgba(255,255,255,0.65); }
+.label.dk  { color: rgba(0,0,0,0.38); }
+
+.h-hook {
+  font-size: 48px; font-weight: 800;
+  letter-spacing: -1.5px; line-height: 1.05;
+  color: #fff; margin-bottom: 20px;
+}
+
+.h-large {
+  font-size: 36px; font-weight: 800;
+  letter-spacing: -1px; line-height: 1.1;
+  margin-bottom: 16px;
+}
+.h-large.wh { color: #fff; }
+.h-large.dk { color: #1A1A1A; }
+
+.h-mid {
+  font-size: 28px; font-weight: 800;
+  letter-spacing: -0.5px; line-height: 1.15;
+  margin-bottom: 14px;
+}
+.h-mid.wh { color: #fff; }
+.h-mid.dk { color: #1A1A1A; }
+
+.stat-num {
+  font-size: 92px; font-weight: 900;
+  letter-spacing: -5px; color: #fff;
+  line-height: 1;
+}
+.stat-cap {
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  margin-top: 8px; margin-bottom: 28px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.body {
+  font-size: 14px; font-weight: 400; line-height: 1.7;
+}
+.body.wh  { color: rgba(255,255,255,0.55); }
+.body.wh2 { color: rgba(255,255,255,0.72); }
+.body.dk  { color: rgba(0,0,0,0.55); }
+
+.body-em {
+  font-size: 14px; font-weight: 700; line-height: 1.6;
+}
+.body-em.wh { color: #fff; }
+.body-em.dk { color: #1A1A1A; }
+
+.spacer-8  { height: 8px; }
+.spacer-12 { height: 12px; }
+.spacer-16 { height: 16px; }
+.spacer-20 { height: 20px; }
+.spacer-24 { height: 24px; }
+
+/* Divider */
+.divider {
+  width: 40px; height: 2px;
+  background: var(--red);
+  margin-bottom: 20px;
+}
+.divider.wh { background: rgba(255,255,255,0.3); }
+.divider.dk { background: rgba(0,0,0,0.2); }
+
+/* Compare rows */
+.cmp-label-row {
+  display: flex; margin-bottom: 6px;
+}
+.cmp-lh {
+  flex: 1; font-size: 9px; font-weight: 700;
+  letter-spacing: 1.8px; text-transform: uppercase;
+  padding: 0 12px 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.cmp-lh.seo { color: rgba(255,255,255,0.3); }
+.cmp-lh.geo { color: var(--red); padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.08); }
+
+.cmp-row {
+  display: flex; margin-bottom: 2px;
+}
+.cmp-cell {
+  flex: 1; padding: 10px 12px 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.cmp-cell.geo {
+  padding-left: 12px;
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+.cmp-v {
+  font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.72); line-height: 1.4;
+}
+.cmp-v.accent { color: #fff; }
+
+/* Step rows */
+.step-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.step-row:last-child { border-bottom: none; }
+.step-num {
+  font-size: 22px; font-weight: 300;
+  color: var(--red); min-width: 24px; line-height: 1.1;
+}
+.step-title {
+  font-size: 13px; font-weight: 700;
+  color: #1A1A1A; display: block; margin-bottom: 2px;
+}
+.step-desc {
+  font-size: 11px; color: rgba(0,0,0,0.48); line-height: 1.45;
+}
+
+/* CTA button */
+.cta-btn {
+  display: inline-flex; align-items: center;
+  padding: 12px 24px;
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  color: #fff; font-family: 'Inter', sans-serif;
+  font-weight: 700; font-size: 13px;
+  border-radius: 4px;
+  margin-top: 28px;
+  letter-spacing: 0.3px;
+}
+
+/* Progress */
+.prog {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 12px 36px 16px;
+  z-index: 10; display: flex; align-items: center; gap: 10px;
+}
+.prog-track {
+  flex: 1; height: 2px; border-radius: 1px; overflow: hidden;
+}
+.prog-track.wh  { background: rgba(255,255,255,0.12); }
+.prog-track.dk  { background: rgba(0,0,0,0.12); }
+.prog-fill { height: 100%; border-radius: 1px; }
+.prog-fill.wh { background: rgba(255,255,255,0.65); }
+.prog-fill.rd { background: rgba(255,255,255,0.85); }
+.prog-fill.dk { background: var(--red); }
+.prog-lbl { font-size: 10px; font-weight: 500; white-space: nowrap; }
+.prog-lbl.wh { color: rgba(255,255,255,0.28); }
+.prog-lbl.dk { color: rgba(0,0,0,0.3); }
+
+/* Arrow */
+.arrow {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 44px;
+  z-index: 9; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.03));
+}
+.arrow.dk-fade {
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.05));
+}
+
+/* IG dots */
+.ig-dots { display: flex; justify-content: center; gap: 5px; padding: 10px 0; background: #111; }
+.ig-dot { width: 6px; height: 6px; border-radius: 50%; background: #333; transition: background 0.2s; }
+.ig-dot.on { background: var(--red); }
+
+/* IG actions */
+.ig-actions { display: flex; align-items: center; padding: 4px 14px 10px; gap: 14px; background: #111; }
+.ig-bm { margin-left: auto; }
+.ig-icon { color: #888; }
+
+/* IG caption */
+.ig-cap { padding: 0 14px 16px; font-size: 12px; color: #888; line-height: 1.55; background: #111; }
+.ig-cap strong { font-weight: 700; color: #ccc; }
+.ig-cap .ts { color: #444; font-size: 11px; display: block; margin-top: 5px; }
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <!-- IG Header -->
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-info">
+      <div class="ig-handle">banirisset</div>
+      <div class="ig-sub">AI &amp; Digital Marketing Consultant</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="carousel-viewport" id="cv">
+    <div class="carousel-track" id="ct">
+
+      <!-- SLIDE 1 — HOOK (Dark) -->
+      <div class="slide s-dark">
+        <div class="sc">
+          <div class="label wh">SEO &amp; GEO</div>
+          <div class="h-hook">Lo gak<br>ada di<br>sana.</div>
+          <div class="body wh">50% pencarian sekarang berakhir di jawaban AI — bukan di website lo.</div>
+          <div class="spacer-16"></div>
+          <div class="body-em wh">Dan lo mungkin belum sadar.</div>
+        </div>
+        <div class="brand-mark">
+          <div class="bm-dot">B</div>
+          <span class="bm-name wh">@banirisset</span>
+        </div>
+        <div class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="prog">
+          <div class="prog-track wh"><div class="prog-fill wh" style="width:14.3%"></div></div>
+          <span class="prog-lbl wh">1 / 7</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 — SEO (Dark) -->
+      <div class="slide s-dark">
+        <div class="sc">
+          <div class="label wh">01 — SEO</div>
+          <div class="divider"></div>
+          <div class="h-large wh">SEO masih<br>relevan.</div>
+          <div class="body wh">Keyword research. Backlink. Meta tag. Lo optimasi biar Google tampilkan website lo.</div>
+          <div class="spacer-20"></div>
+          <div class="body wh">Traffic, klik, ranking.<br>Ini semua masih penting.</div>
+          <div class="spacer-16"></div>
+          <div class="body-em wh">Tapi ini bukan satu-satunya permainan lagi.</div>
+        </div>
+        <div class="brand-mark">
+          <div class="bm-dot">B</div>
+          <span class="bm-name wh">@banirisset</span>
+        </div>
+        <div class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="prog">
+          <div class="prog-track wh"><div class="prog-fill wh" style="width:28.6%"></div></div>
+          <span class="prog-lbl wh">2 / 7</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 — STAT (Dark) -->
+      <div class="slide s-dark">
+        <div class="sc mid">
+          <div class="label wh">Data Gartner 2026</div>
+          <div class="stat-num">25%</div>
+          <div class="stat-cap">penurunan volume search Google</div>
+          <div class="body wh2">Orang tanya AI duluan.<br>Baru Google kalau AI gak jawab.</div>
+          <div class="spacer-16"></div>
+          <div class="body-em wh">Lo invisible buat 1 dari 4 calon customer lo.</div>
+        </div>
+        <div class="brand-mark">
+          <div class="bm-dot">B</div>
+          <span class="bm-name wh">@banirisset</span>
+        </div>
+        <div class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="prog">
+          <div class="prog-track wh"><div class="prog-fill wh" style="width:42.9%"></div></div>
+          <span class="prog-lbl wh">3 / 7</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 — GEO REVEAL (Red) -->
+      <div class="slide s-red">
+        <div class="sc">
+          <div class="label red">02 — GEO</div>
+          <div class="divider wh"></div>
+          <div class="h-large wh">Generative<br>Engine<br>Optimization.</div>
+          <div class="body wh2">Lo optimasi konten biar AI — ChatGPT, Perplexity, Gemini — mau <strong style="color:#fff;">SEBUT</strong> brand lo.</div>
+          <div class="spacer-16"></div>
+          <div class="body-em wh">Bukan kejar klik.<br>Tapi jadi jawaban.</div>
+        </div>
+        <div class="brand-mark">
+          <div class="bm-dot outline">B</div>
+          <span class="bm-name wh">@banirisset</span>
+        </div>
+        <div class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="prog">
+          <div class="prog-track wh"><div class="prog-fill rd" style="width:57.1%"></div></div>
+          <span class="prog-lbl wh">4 / 7</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 — COMPARE (Dark) -->
+      <div class="slide s-dark">
+        <div class="sc">
+          <div class="label wh">Bedanya</div>
+          <div class="h-mid wh">SEO vs GEO</div>
+          <div class="spacer-8"></div>
+
+          <div class="cmp-label-row">
+            <div class="cmp-lh seo">SEO</div>
+            <div class="cmp-lh geo">GEO</div>
+          </div>
+
+          <div class="cmp-row">
+            <div class="cmp-cell"><div class="cmp-v">Ranking Google</div></div>
+            <div class="cmp-cell geo"><div class="cmp-v accent">Disebut AI</div></div>
+          </div>
+          <div class="cmp-row">
+            <div class="cmp-cell"><div class="cmp-v">Traffic &amp; klik</div></div>
+            <div class="cmp-cell geo"><div class="cmp-v accent">Brand mention</div></div>
+          </div>
+          <div class="cmp-row">
+            <div class="cmp-cell"><div class="cmp-v">Butuh backlink</div></div>
+            <div class="cmp-cell geo"><div class="cmp-v accent">Butuh otoritas konten</div></div>
+          </div>
+          <div class="cmp-row">
+            <div class="cmp-cell"><div class="cmp-v">Keyword stuffing</div></div>
+            <div class="cmp-cell geo"><div class="cmp-v accent">Jawab pertanyaan spesifik</div></div>
+          </div>
+          <div class="spacer-16"></div>
+          <div class="body-em wh">GEO bukan ganti SEO.<br>Tapi pelengkap wajib.</div>
+        </div>
+        <div class="brand-mark">
+          <div class="bm-dot">B</div>
+          <span class="bm-name wh">@banirisset</span>
+        </div>
+        <div class="arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="prog">
+          <div class="prog-track wh"><div class="prog-fill wh" style="width:71.4%"></div></div>
+          <span class="prog-lbl wh">5 / 7</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 — HOW-TO (Cream) -->
+      <div class="slide s-cream">
+        <div class="sc">
+          <div class="label dk">Mulai dari sini</div>
+          <div class="h-mid dk">4 langkah<br>ke GEO</div>
+
+          <div class="step-row">
+            <span class="step-num">01</span>
+            <div>
+              <span class="step-title">Jawab pertanyaan spesifik</span>
+              <span class="step-desc">Bukan konten generik — satu pertanyaan, satu jawaban tuntas</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <span class="step-num">02</span>
+            <div>
+              <span class="step-title">Bahasa natural</span>
+              <span class="step-desc">Tulis seperti orang ngobrol — bukan keyword stuffing</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <span class="step-num">03</span>
+            <div>
+              <span class="step-title">Bangun topical authority</span>
+              <span class="step-desc">Satu topik, dalam banget — jadi referensi utama</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <span class="step-num">04</span>
+            <div>
+              <span class="step-title">Konten yang bisa dikutip</span>
+              <span class="step-desc">Ada data, ada nama, ada konteks — biar AI sebut lo</span>
+            </div>
+          </div>
+        </div>
+        <div class="brand-mark">
+          <div class="bm-dot dk-outline">B</div>
+          <span class="bm-name dk">@banirisset</span>
+        </div>
+        <div class="arrow dk-fade">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(0,0,0,0.18)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="prog">
+          <div class="prog-track dk"><div class="prog-fill dk" style="width:85.7%"></div></div>
+          <span class="prog-lbl dk">6 / 7</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 — CTA (Red) -->
+      <div class="slide s-red">
+        <div class="sc mid">
+          <div class="label red">Simpan ini</div>
+          <div class="h-hook" style="font-size:42px;">Found this<br>helpful?</div>
+          <div class="body wh2">Mulai pikirin GEO sekarang.<br>Sebelum kompetitor lo yang dapat porsi itu.</div>
+          <div class="spacer-16"></div>
+          <div class="body wh2">Udah eksperimen GEO?<br>Share di komen — gw penasaran.</div>
+          <div class="cta-btn">Follow @banirisset 👇</div>
+        </div>
+        <div class="brand-mark">
+          <div class="bm-dot outline">B</div>
+          <span class="bm-name wh">@banirisset</span>
+        </div>
+        <!-- No arrow on last slide -->
+        <div class="prog">
+          <div class="prog-track wh"><div class="prog-fill rd" style="width:100%"></div></div>
+          <span class="prog-lbl wh">7 / 7</span>
+        </div>
+      </div>
+
+    </div><!-- /carousel-track -->
+  </div><!-- /carousel-viewport -->
+
+  <!-- Dots -->
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot on"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+  </div>
+
+  <!-- Actions -->
+  <div class="ig-actions">
+    <div class="ig-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ig-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="ig-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><line x1="22" y1="2" x2="11" y2="13" stroke="#666" stroke-width="1.8" stroke-linecap="round"/><polygon points="22 2 15 22 11 13 2 9 22 2" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </div>
+    <div class="ig-icon ig-bm">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <!-- Caption -->
+  <div class="ig-cap">
+    <strong>banirisset</strong> Lo udah SEO-in website, tapi 50% orang sekarang gak sampai ke sana. Kenalan sama GEO.
+    <span class="ts">Baru saja</span>
+  </div>
+
+</div><!-- /ig-frame -->
+
+<script>
+  const vp = document.getElementById('cv');
+  const track = document.getElementById('ct');
+  const dots = document.querySelectorAll('.ig-dot');
+  const TOTAL = 7;
+  let cur = 0, startX = 0, isDragging = false, moved = false;
+
+  function goTo(i) {
+    cur = Math.max(0, Math.min(TOTAL - 1, i));
+    track.style.transform = `translateX(${-cur * 420}px)`;
+    dots.forEach((d, idx) => d.classList.toggle('on', idx === cur));
+  }
+
+  vp.addEventListener('mousedown', e => { startX = e.clientX; isDragging = true; moved = false; track.style.transition = 'none'; });
+  vp.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDragging = true; moved = false; track.style.transition = 'none'; }, { passive: true });
+  vp.addEventListener('mousemove', e => { if (!isDragging) return; if (Math.abs(e.clientX - startX) > 4) moved = true; });
+  vp.addEventListener('touchmove', e => { if (!isDragging) return; if (Math.abs(e.touches[0].clientX - startX) > 4) moved = true; }, { passive: true });
+
+  function end(endX) {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.transition = 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    const diff = startX - endX;
+    if (Math.abs(diff) > 40 && moved) goTo(diff > 0 ? cur + 1 : cur - 1);
+    else goTo(cur);
+  }
+
+  vp.addEventListener('mouseup', e => end(e.clientX));
+  vp.addEventListener('mouseleave', e => { if (isDragging) end(e.clientX); });
+  vp.addEventListener('touchend', e => end(e.changedTouches[0].clientX));
+
+  goTo(0);
+</script>
+</body>
+</html>
