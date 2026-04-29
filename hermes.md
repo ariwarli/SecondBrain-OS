@@ -80,6 +80,7 @@ State yang harus dianggap aktif sekarang:
 - group operasi utama = `SecondBrain OS`
 - runtime resmi REED/Hermes berjalan via `hermes-gateway.service`
 - startup resmi memakai service sistem `hermes-gateway.service` dengan home runtime `/home/hermes/.hermes`
+- policy model topic aktif: `SecondBrain OS` topic `content` (`3`) default ke alias `speedup-brand` pada fresh turn; default global `qwen3-coder:480b` tetap dipakai untuk lane lain kecuali ada override sesi
 - model mental `REED DULL` sebagai sistem/bot terpisah sudah retired; scheduler diperlakukan sebagai subsystem internal REED
 - voice-to-text workflow AKTIF: user nyaman kirim voice note → REED respons langsung (ini workflow utama, jangan matikan)
 - `Content nag` scheduler aktif dan diprioritaskan untuk `Threads`, `LinkedIn`, dan `Instagram Carousel`
@@ -143,6 +144,7 @@ Telegram mapping aktif:
 
 Catatan penting:
 - topic test paling aman untuk diagnosis cepat adalah `ops`
+- topic `content` adalah drafting lane; pada fresh turn runtime sekarang menerapkan alias `speedup-brand` secara otomatis
 - `General` bukan topic kerja aktif dan jangan dipakai sebagai patokan
 <!-- GENERATED:TELEGRAM_MAP:END -->
 
@@ -218,6 +220,12 @@ Insiden penting yang masih relevan:
 - state `voice transcription disabled` dinyatakan stale; voice workflow aktif dan dipertahankan
 - model mental `REED DULL` sebagai sistem kedua dinyatakan retired; jangan pakai lagi untuk membaca runtime hari ini
 - referensi `docs/openclaw-rules.md` dinyatakan stale; pakai path arsip bila memang perlu baca aturan lama
+
+### 2026-04-29 (Content Topic Runtime Fix)
+
+- topic `content` di `SecondBrain OS` sekarang punya policy model runtime `speedup-brand` pada fresh turn; ini mencegah drafting konten jatuh ke default global `qwen3-coder:480b`
+- `/models` sekarang alias resmi dari `/model`, jadi tidak lagi diperlakukan sebagai pesan biasa yang meng-interrupt task aktif
+- saat agent masih jalan, `/model` dan `/models` sekarang memberi busy message yang lebih jelas: tunggu selesai atau `/stop` dulu, lalu fresh turn akan pakai topic policy lagi
 
 Implikasi tetap:
 - pakai runtime live Hermes untuk verifikasi akhir sebelum mengambil keputusan operasional

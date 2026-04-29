@@ -45,6 +45,9 @@ Inbox adalah surface capture tercepat. Inbox bukan tempat final.
 - Path default:
   - `brand-os/`
   - `personal-brand/`
+- Runtime note:
+  - topic Telegram `content` (`thread_id: 3`) adalah drafting lane
+  - fresh turn di topic ini sekarang diarahkan ke alias runtime `speedup-brand`; jangan pakai latensi `qwen3-coder:480b` sebagai patokan lane content
 
 ### CRM
 
