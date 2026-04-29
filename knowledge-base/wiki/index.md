@@ -42,6 +42,9 @@ Untuk prosedur kerja yang harus diulang konsisten.
 
 Masuk sini bila dokumen menjawab: "bagaimana menjalankan sesuatu?"
 
+Current canon entry:
+- `knowledge-base/wiki/SOPs/sop-intake-dokumen-reed.md`
+
 ### `Decisions`
 
 Untuk keputusan final, alasan singkat, dan konsekuensi operasionalnya.

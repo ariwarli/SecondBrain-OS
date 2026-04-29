@@ -14,6 +14,7 @@ Canonical structure untuk `/Users/banirisset/2_Areas/banirisset`.
 - `projects/` — internal projects and tool lab
 - `research/` — active investigation lane
 - `knowledge-base/` — passive knowledge + wiki canon
+- `knowledge-base/references.md` — landing file untuk semua referensi eksternal yang diintake via REED
 - `inbox/` — capture and routing residue
 - `wellbeing/` — wellbeing tracking lane
 - `memory/` — daily continuity notes
