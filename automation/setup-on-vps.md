@@ -1,8 +1,8 @@
 # Scheduler Setup On VPS
 
-Panduan ini menghubungkan blueprint scheduler ke VPS OpenClaw kamu.
+Panduan ini menghubungkan blueprint scheduler ke VPS Hermes kamu.
 
-Semua jadwal di file ini mengikuti rekomendasi NotebookLM `OpenClaw` dan kondisi server kamu saat ini.
+Semua jadwal di file ini mengikuti rekomendasi NotebookLM legacy `OpenClaw` dan kondisi server kamu saat ini.
 
 ## 1. Tentukan Timezone Scheduler
 
@@ -38,7 +38,7 @@ Runner Telegram sudah disiapkan:
 - `automation/run-telegram-job.sh`
 
 Arsitektur yang dipakai:
-- OpenClaw bot tetap bot utama
+- Hermes bot tetap bot utama
 - bot kedua dipakai sebagai scheduler sender
 - cron memakai bot kedua untuk post prompt ke topic yang benar
 
@@ -63,12 +63,12 @@ Template env sudah ada di:
 
 ### Cara ambil `chat_id` dan `thread_id`
 
-1. Tambahkan scheduler bot ke group/topic yang sama dengan OpenClaw
+1. Tambahkan scheduler bot ke group/topic yang sama dengan Hermes
 2. Kirim pesan test manual ke tiap topic
 3. Jalankan:
 
 ```bash
-python3 /Users/banirisset/banirisset/automation/telegram_inspect_updates.py
+python3 /Users/banirisset/2_Areas/banirisset/automation/telegram_inspect_updates.py
 ```
 
 4. Ambil nilai `chat_id` dan `thread_id` dari output
@@ -97,7 +97,7 @@ Lalu paste salah satu:
 Sebelum itu:
 
 ```bash
-chmod +x /Users/banirisset/banirisset/automation/run-telegram-job.sh
+chmod +x /Users/banirisset/2_Areas/banirisset/automation/run-telegram-job.sh
 ```
 
 ## 4. Verification Checklist
@@ -111,16 +111,16 @@ Checklist minimal:
 - security audit tetap jalan
 - overnight subagents tidak overlap liar
 - log cron ada
-- log runner ada di `/home/openclaw/automation/logs/`
+- log runner ada di `/home/hermes/automation/logs/`
 
 Contoh dry run:
 
 ```bash
-python3 /Users/banirisset/banirisset/automation/telegram_runner.py \
+python3 /Users/banirisset/2_Areas/banirisset/automation/telegram_runner.py \
   --job-id morning_brief \
-  --prompt-file /Users/banirisset/banirisset/automation/jobs/morning-brief.md \
+  --prompt-file /Users/banirisset/2_Areas/banirisset/automation/jobs/morning-brief.md \
   --thread-key updates \
-  --config /Users/banirisset/banirisset/automation/telegram-config.json \
+  --config /Users/banirisset/2_Areas/banirisset/automation/telegram-config.json \
   --dry-run
 ```
 
@@ -148,10 +148,10 @@ Jangan aktifkan overnight jobs dulu sebelum logika runner dan log-nya beres.
 ## 7. Log Rotation
 
 Pasang policy ini di VPS:
-- `openclaw/automation/openclaw-scheduler.logrotate`
+- `automation/hermes-scheduler.logrotate`
 
 Target path di VPS:
-- `/etc/logrotate.d/openclaw-scheduler`
+- `/etc/logrotate.d/hermes-scheduler`
 
 Tujuan:
 - rotate log harian
@@ -163,5 +163,5 @@ Tujuan:
 Untuk cek cepat di VPS:
 
 ```bash
-/home/openclaw/automation/scheduler-status.sh
+/home/hermes/automation/scheduler-status.sh
 ```

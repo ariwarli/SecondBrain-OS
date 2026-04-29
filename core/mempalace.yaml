@@ -2,12 +2,12 @@ wing: banirisset
 rooms:
 - name: clients
   description: Files from clients/
-- name: brand_os___bani_risset
-  description: Files from Brand OS - Bani Risset/
+- name: brand_os
+  description: Files from brand-os/
 - name: prompt_refinement
   description: Files from prompt-refinement/
-- name: n8n
-  description: Files from n8n/
+- name: state
+  description: Files from state/
 - name: ops
   description: Files from ops/
 - name: personal_brand

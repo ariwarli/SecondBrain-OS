@@ -17,7 +17,7 @@ Read in this order:
 1. `/Users/banirisset/2_Areas/banirisset/AGENTS.md`
 2. `/Users/banirisset/2_Areas/banirisset/SOUL.md`
 3. `/Users/banirisset/2_Areas/banirisset/USER.md`
-4. `/Users/banirisset/2_Areas/banirisset/openclaw.md`
+4. `/Users/banirisset/2_Areas/banirisset/hermes.md`
 5. `/Users/banirisset/2_Areas/banirisset/daily.md`
 6. `/Users/banirisset/2_Areas/banirisset/memory/2026-04-28.md`
 

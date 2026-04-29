@@ -2,8 +2,8 @@ import asyncio
 from pathlib import Path
 from playwright.async_api import async_playwright
 
-INPUT_HTML = Path("/Users/banirisset/banirisset/personal-brand/threads/carousels/2026-03-28-seo-vs-geo-v2.html")
-OUTPUT_DIR = Path("/Users/banirisset/banirisset/personal-brand/threads/carousels/slides-seo-geo-v2")
+INPUT_HTML = Path("/Users/banirisset/2_Areas/banirisset/personal-brand/threads/carousels/2026-03-28-seo-vs-geo-v2.html")
+OUTPUT_DIR = Path("/Users/banirisset/2_Areas/banirisset/personal-brand/threads/carousels/slides-seo-geo-v2")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 TOTAL_SLIDES = 7

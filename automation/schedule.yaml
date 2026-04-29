@@ -5,7 +5,7 @@
 # Side Effects: mendorong posting ke topic Telegram dan menjalankan background checks
 
 version: 1
-source: "NotebookLM OpenClaw 05667e4d-493c-4236-83a4-ae74dadb178e"
+source: "NotebookLM legacy OpenClaw 05667e4d-493c-4236-83a4-ae74dadb178e"
 operator_timezone: "Asia/Jakarta"
 server_timezone: "Asia/Singapore"
 activation_phase: "phase_1_telegram_first"
@@ -63,7 +63,7 @@ jobs:
     server_time: "10:00 SGT"
     cron_wib: "0 9 * * *"
     cron_sgt: "0 10 * * *"
-    command_hint: "openclaw security audit --deep"
+    command_hint: "hermes security audit --deep"
     channel: "ops"
     silent: false
     goal: "Daily security check"

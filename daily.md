@@ -22,7 +22,7 @@ File ini di-generate otomatis dari inbox items yang masuk. REED update ini setia
 
 ---
 
-## Delegated To OpenClaw (dari Inbox Items)
+## Delegated To Hermes (dari Inbox Items)
 
 ### Task: TOR StopTB
 - **Source:** Inbox Telegram
@@ -68,7 +68,7 @@ File ini di-generate otomatis dari inbox items yang masuk. REED update ini setia
 
 ## End Of Day Auto-Summary
 
-*REED DULL mengisi ini setiap 18:00 dari inbox items yang diproses hari ini.*
+*Scheduler internal REED mengisi ini setiap 18:00 dari inbox items yang diproses hari ini.*
 
 - Yang selesai hari ini:
 - Yang pending:
@@ -81,7 +81,7 @@ File ini di-generate otomatis dari inbox items yang masuk. REED update ini setia
 ## Rules
 
 - File ini di-update otomatis dari inbox items. Jangan edit manual kecuali koreksi.
-- Setiap inbox item yang jadi task → masuk ke section "Delegated To OpenClaw".
+- Setiap inbox item yang jadi task → masuk ke section "Delegated To Hermes".
 - Setiap inbox item yang jadi follow-up → masuk ke section "Waiting For".
 - Setiap inbox item yang jadi konten → masuk ke section "Content Queue".
 - Top 3 Priorities = 3 task paling urgent dari semua yang pending.

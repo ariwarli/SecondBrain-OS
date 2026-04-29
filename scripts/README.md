@@ -1,6 +1,6 @@
 # Scripts
 
-Folder ini disiapkan untuk integrasi kecil yang membuat OpenClaw lebih operasional, bukan lebih rumit.
+Folder ini disiapkan untuk integrasi kecil yang membuat Hermes lebih operasional, bukan lebih rumit.
 
 Prioritas awal yang diambil dari acuan NotebookLM lalu disesuaikan dengan workspace ini:
 
@@ -11,7 +11,7 @@ Prioritas awal yang diambil dari acuan NotebookLM lalu disesuaikan dengan worksp
   - wrapper tipis ke Todoist API
   - tugasnya hanya request dasar dan handling auth
 - `sync_task.sh`
-  - buat / update task status dari workflow OpenClaw
+  - buat / update task status dari workflow Hermes
   - target status utama: `In Progress`, `Waiting`, `Done`
 - `add_comment.sh`
   - tambahkan progres sub-step ke task tanpa harus buka terminal log

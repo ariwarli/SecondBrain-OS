@@ -2,7 +2,7 @@
 # Caller: operator runtime, builder, dan agent yang audit/migrasi REED
 # Dependensi: docs/REED_RUNTIME_ARCHITECTURE.md, docs/REED_MEMORY_AND_LEARNING.md, docs/INBOX_ROUTING.md
 # Main Functions: mendefinisikan capability, service contract, autonomy tier, channel, cron, dan migration flags
-# Side Effects: jadi spec implementasi menggantikan blueprint OpenClaw yang terfragmentasi
+# Side Effects: jadi spec implementasi menggantikan blueprint runtime lama yang terfragmentasi
 
 version: 1
 mode: hermes_style_reed
@@ -152,11 +152,11 @@ approvals:
 
 migration:
   keep_as_input:
-    - openclaw.md
+    - hermes.md
     - automation/README.md
     - automation/schedule.yaml
     - automation/jobs
-    - scheduler/scripts
+    - archives/legacy-runtime/scheduler/scripts
     - ops/subagents/README.md
   retire_model_mental:
     - "REED DULL as separate system"

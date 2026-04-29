@@ -1,23 +1,23 @@
 <!--
-Tujuan: peta migrasi dari artefak OpenClaw saat ini ke runtime REED yang lebih mirip Hermes
+Tujuan: peta konsolidasi artefak runtime lama ke runtime REED/Hermes
 Caller: builder, operator, dan auditor migrasi
-Dependensi: openclaw.md, automation/, scheduler/, ops/subagents/, docs/REED_RUNTIME_ARCHITECTURE.md
+Dependensi: hermes.md, automation/, archives/legacy-runtime/scheduler/, ops/subagents/, docs/REED_RUNTIME_ARCHITECTURE.md
 Main Functions: menentukan apa yang di-keep, di-merge, di-rewrite, dan di-retire
 Side Effects: mengurangi drift dan mencegah fragmentasi runtime
 -->
 
 # REED Hermes Migration Map
 
-Dokumen ini menjawab: artefak OpenClaw yang ada sekarang harus diapakan saat REED dimigrasikan ke runtime Hermes-style.
+Dokumen ini menjawab: artefak runtime lama yang ada sekarang harus diapakan saat REED dikonsolidasikan ke model Hermes-style.
 
 ## Keep As Transitional Source
 
 Tetap dipakai sebagai input migrasi:
-- `openclaw.md`
+- `hermes.md`
 - `automation/README.md`
 - `automation/schedule.yaml`
 - `automation/jobs/*.md`
-- `scheduler/scripts/*.py`
+- `archives/legacy-runtime/scheduler/scripts/*.py`
 - `ops/subagents/README.md`
 - `docs/INBOX_ROUTING.md`
 
@@ -30,16 +30,16 @@ Harus diubah menjadi bentuk runtime REED yang baru:
 
 ### Scheduler / Cron
 - `automation/schedule.yaml`
-  - dari blueprint OpenClaw menjadi source-of-truth cron spec REED
-- `scheduler/queue`, `scheduler/archive`, `scheduler/tracking`
+  - dari blueprint lama menjadi source-of-truth cron spec REED
+- `archives/legacy-runtime/scheduler/queue`, `archives/legacy-runtime/scheduler/archive`, `archives/legacy-runtime/scheduler/tracking`
   - dari direktori helper menjadi bagian dari unified scheduler subsystem
 
 ### Subagents
 - `ops/subagents/README.md`
-  - dari roster OpenClaw menjadi REED worker contract
+  - dari roster lama menjadi REED worker contract
 
 ### Runtime Brain
-- `openclaw.md`
+- `hermes.md`
   - dari startup brain utama menjadi compat/transitional state file
   - state arsitektur target pindah ke `docs/REED_RUNTIME_ARCHITECTURE.md`
 
@@ -61,10 +61,10 @@ Harus dianggap retired pada target state:
 
 | Current artifact | Future REED home | Action |
 | --- | --- | --- |
-| `openclaw.md` | compat state + migration note | Keep, narrow scope |
+| `hermes.md` | compat state + migration note | Keep, narrow scope |
 | `automation/schedule.yaml` | `automation/reed-runtime-spec.yaml` | Merge/replace |
 | `automation/jobs/*.md` | skills or cron prompts | Reclassify |
-| `scheduler/scripts/*.py` | scheduler subsystem | Port or rewrite |
+| `archives/legacy-runtime/scheduler/scripts/*.py` | scheduler subsystem | Port or rewrite |
 | `ops/subagents/README.md` | worker contract | Rewrite |
 | `docs/INBOX_ROUTING.md` | keep | Preserve and extend |
 | `knowledge-base/wiki/` | canon library | Keep |

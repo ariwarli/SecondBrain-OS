@@ -6,7 +6,7 @@ Rules:
 - Use the cheapest suitable model.
 
 Check:
-- OpenClaw/gateway health
+- Hermes/gateway health
 - failed or dead cron jobs
 - disk pressure
 - urgent unread items

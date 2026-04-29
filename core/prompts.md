@@ -1,6 +1,6 @@
-# OpenClaw Prompt Pack
+# Hermes Prompt Pack
 
-Prompt pack ini disusun dari pola yang ditekankan di NotebookLM `OpenClaw` (`05667e4d-493c-4236-83a4-ae74dadb178e`).
+Prompt pack ini disusun dari pola yang ditekankan di NotebookLM legacy `OpenClaw` (`05667e4d-493c-4236-83a4-ae74dadb178e`).
 
 ## Morning Brief Setup
 
@@ -50,6 +50,6 @@ When I give specific correction and say "update the skill", generalize the fix s
 ## Minimal Context Reminder
 
 ```text
-Load only SOUL.md, USER.md, IDENTITY.md, openclaw/openclaw.md, and daily.md.
+Load only SOUL.md, USER.md, IDENTITY.md, hermes.md, and daily.md.
 Pull more context only when needed.
 ```

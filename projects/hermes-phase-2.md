@@ -1,10 +1,10 @@
 # Project Brief
 
-Fase ini melanjutkan setup inti OpenClaw setelah infra, scheduler, dan workspace dasar sudah stabil.
+Fase ini melanjutkan setup inti Hermes setelah infra, scheduler, dan workspace dasar sudah stabil.
 
 ## Project
 
-- Name: OpenClaw Phase 2
+- Name: Hermes Phase 2
 - Owner: banirisset
 - Status: active
 - Start date: 2026-04-09
@@ -39,8 +39,8 @@ Fase ini melanjutkan setup inti OpenClaw setelah infra, scheduler, dan workspace
 
 ## Inputs / Context
 
-- Repos / files: `openclaw.md`, `daily.md`, `crm.md`, `openclaw-rules.md`, `automation/schedule.yaml`
-- URLs / references: NotebookLM `OpenClaw` `05667e4d-493c-4236-83a4-ae74dadb178e`
+- Repos / files: `hermes.md`, `daily.md`, `crm.md`, `archives/system-snapshots/openclaw-archive/openclaw-rules.md`, `automation/schedule.yaml`
+- URLs / references: NotebookLM legacy `OpenClaw` `05667e4d-493c-4236-83a4-ae74dadb178e`
 - Existing assets: VPS scheduler, PM2 runtime, Telegram topics, automation jobs
 - Dependencies: Todoist token, Google auth flow, voice transcription provider
 

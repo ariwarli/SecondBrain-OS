@@ -6,5 +6,5 @@ if [ "$#" -ne 2 ]; then
 fi
 MSG="$1"
 TIME="$2"
-echo "set -a; . /home/openclaw/banirisset/automation/telegram-runner.env; set +a; /usr/bin/python3 /home/openclaw/banirisset/automation/telegram_runner.py --job-id reminder --thread-key inbox --config /home/openclaw/banirisset/automation/telegram-config.json --message \"🔔 REMINDER DARI REED: $MSG\"" | at "$TIME"
+echo "set -a; . /home/hermes/banirisset/automation/telegram-runner.env; set +a; /usr/bin/python3 /home/hermes/banirisset/automation/telegram_runner.py --job-id reminder --thread-key inbox --config /home/hermes/banirisset/automation/telegram-config.json --message \"🔔 REMINDER DARI REED: $MSG\"" | at "$TIME"
 echo "Reminder successfully scheduled for: $TIME"

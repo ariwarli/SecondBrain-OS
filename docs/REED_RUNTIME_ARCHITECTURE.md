@@ -1,9 +1,9 @@
 <!--
-Tujuan: source of truth arsitektur runtime REED pasca-OpenClaw
+Tujuan: source of truth arsitektur runtime REED/Hermes
 Caller: operator workspace, agent utama, builder, dan auditor runtime
-Dependensi: openclaw.md, automation/reed-runtime-spec.yaml, docs/INBOX_ROUTING.md, docs/REED_MEMORY_AND_LEARNING.md
+Dependensi: hermes.md, automation/reed-runtime-spec.yaml, docs/INBOX_ROUTING.md, docs/REED_MEMORY_AND_LEARNING.md
 Main Functions: mendefinisikan komponen inti runtime, boundary service, dan kontrak otonomi
-Side Effects: jadi acuan implementasi REED agar tidak kembali ke model OpenClaw yang terfragmentasi
+Side Effects: jadi acuan implementasi REED agar tidak kembali ke model runtime lama yang terfragmentasi
 -->
 
 # REED Runtime Architecture
@@ -80,7 +80,7 @@ Boundary baru yang harus dipakai:
 - `subagents` = worker internal REED, bukan interface pengguna utama
 - `wiki canon` = pustaka/journal jangka panjang, bukan live agent RAM
 
-Boundary yang diretas dari OpenClaw dan harus dihentikan:
+Boundary lama yang harus dihentikan:
 - memikirkan `REED DULL` sebagai sistem kedua yang berdiri sendiri
 - memisahkan reminder/cron dari session agent seolah-olah itu lane lain
 - menaruh terlalu banyak state kerja di dokumen naratif tanpa kontrak runtime
@@ -176,6 +176,6 @@ Urutan acuan:
 2. `automation/reed-runtime-spec.yaml`
 3. `docs/REED_MEMORY_AND_LEARNING.md`
 4. `docs/INBOX_ROUTING.md`
-5. `openclaw.md` untuk state transisi dan compat notes
+5. `hermes.md` untuk state transisi dan compat notes
 
-`openclaw.md` tetap relevan selama masa migrasi, tetapi bukan lagi satu-satunya brain runtime.
+`hermes.md` tetap relevan selama masa migrasi, tetapi bukan lagi satu-satunya brain runtime.

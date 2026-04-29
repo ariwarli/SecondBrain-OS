@@ -17,7 +17,7 @@ Do not collapse those into one bucket.
    - Main files:
      - `/home/hermes/.hermes/.env`
      - `/home/hermes/.hermes/config.yaml`
-   - Do not assume legacy OpenClaw config controls Hermes Telegram behavior
+   - Do not assume legacy pre-Hermes config controls Hermes Telegram behavior
 
 2. **Active Service**
    - Hermes Telegram runtime is `hermes-gateway.service`
@@ -74,7 +74,7 @@ Do not collapse those into one bucket.
 - Main local workspace: `/Users/banirisset/2_Areas/banirisset`
 - Existing continuity files:
   - `/Users/banirisset/2_Areas/banirisset/AGENTS.md`
-  - `/Users/banirisset/2_Areas/banirisset/openclaw.md`
+  - `/Users/banirisset/2_Areas/banirisset/hermes.md`
   - `/Users/banirisset/2_Areas/banirisset/daily.md`
   - `/Users/banirisset/2_Areas/banirisset/crm.md`
   - `/Users/banirisset/2_Areas/banirisset/memory/2026-04-28.md`
@@ -84,7 +84,7 @@ Do not collapse those into one bucket.
 1. `AGENTS.md`
 2. `SOUL.md`
 3. `USER.md`
-4. `openclaw.md`
+4. `hermes.md`
 5. `daily.md`
 6. `memory/2026-04-28.md`
 

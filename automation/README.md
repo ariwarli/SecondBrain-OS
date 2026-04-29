@@ -8,14 +8,14 @@ Side Effects: jadi acuan saat memasang atau mengaudit scheduler di VPS
 
 # Automation Pack
 
-Folder ini berisi blueprint automation dan scheduler warisan OpenClaw, plus transisi menuju runtime REED yang lebih mirip Hermes.
+Folder ini berisi blueprint automation dan scheduler transisional untuk runtime REED/Hermes.
 
 Source of truth baru untuk target runtime:
 - `docs/REED_RUNTIME_ARCHITECTURE.md`
 - `docs/REED_MEMORY_AND_LEARNING.md`
 - `automation/reed-runtime-spec.yaml`
 
-Semua isi di sini diturunkan dari NotebookLM `OpenClaw` (`05667e4d-493c-4236-83a4-ae74dadb178e`) lalu disesuaikan dengan konteks kamu:
+Semua isi di sini diturunkan dari NotebookLM legacy `OpenClaw` (`05667e4d-493c-4236-83a4-ae74dadb178e`) lalu disesuaikan dengan konteks kamu:
 - timezone user: `Asia/Jakarta` / WIB
 - server saat ini: Singapore / SGT
 - prinsip notebook: morning brief, CRM review, content nag, heartbeat, end-of-day summary, overnight subagents
@@ -34,7 +34,7 @@ Semua isi di sini diturunkan dari NotebookLM `OpenClaw` (`05667e4d-493c-4236-83a
   - urutan pasang scheduler di VPS
 - `logs/*.log`
   - log per job dari runner shell
-- `openclaw-scheduler.logrotate`
+- `hermes-scheduler.logrotate`
   - rotation policy untuk log runner di VPS
 - `scheduler-status.sh`
   - ringkasan cepat crontab dan log terakhir
@@ -58,8 +58,8 @@ Belum diaktifkan otomatis pada phase 1:
 Runner ini diasumsikan pakai bot Telegram kedua sebagai scheduler sender.
 
 Kenapa:
-- OpenClaw tetap jadi bot operator utama
-- scheduler bot hanya kirim prompt terjadwal ke topic yang dipantau OpenClaw
+- Hermes tetap jadi bot operator utama
+- scheduler bot hanya kirim prompt terjadwal ke topic yang dipantau Hermes
 - ini lebih aman dan lebih realistis daripada mengandalkan bot yang sama untuk memicu dirinya sendiri
 
 File terkait:
@@ -100,7 +100,7 @@ Runner shell menulis log per job ke:
 - `automation/logs/<job_id>.log`
 
 Di VPS nanti path-nya:
-- `/home/openclaw/automation/logs/<job_id>.log`
+- `/home/hermes/automation/logs/<job_id>.log`
 
 Rotation yang direkomendasikan:
 - daily
@@ -127,4 +127,4 @@ Gunakan folder ini sebagai:
 - sumber prompt/job lama
 - bahan ekstraksi skill dan cron job REED
 
-Target akhirnya adalah unified scheduler subsystem REED, bukan blueprint OpenClaw yang ditempel apa adanya.
+Target akhirnya adalah unified scheduler subsystem REED, bukan blueprint legacy yang ditempel apa adanya.

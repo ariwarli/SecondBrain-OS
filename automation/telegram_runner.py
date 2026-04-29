@@ -128,7 +128,7 @@ def resolve_thread_id(config: dict, thread_key: str | None) -> int | None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Send a scheduled OpenClaw prompt into a Telegram topic.")
+    parser = argparse.ArgumentParser(description="Send a scheduled Hermes prompt into a Telegram topic.")
     parser.add_argument("--job-id", required=True, help="Logical job id, e.g. morning_brief")
     parser.add_argument("--prompt-file", help="Path to the job prompt markdown file")
     parser.add_argument("--message", help="Raw message body to send instead of reading a prompt file")

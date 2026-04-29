@@ -1,11 +1,3 @@
-<!--
-Tujuan: aturan operasi utama workspace Hermes untuk Bani Risset
-Caller: agent utama, subagent, dan sesi startup baru
-Dependensi: SOUL.md, USER.md, hermes.md, knowledge-base/wiki, automation/schedule.yaml
-Main Functions: startup order, memory boundary, inbox routing policy, heartbeat policy
-Side Effects: membaca dan memperbarui file memory/wiki/dokumen operasi
--->
-
 # AGENTS.md - Your Workspace
 
 This folder is home. Treat it that way.
@@ -21,9 +13,7 @@ Before doing anything else:
 1. Read `SOUL.md` — this is who you are
 2. Read `USER.md` — this is who you're helping
 3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
-4. Read `knowledge-base/wiki/index.md` dan `knowledge-base/wiki/log.md` bila ada
-5. Read `knowledge-base/wiki/sessions/*-active.md` bila ada dan memang relevan
-6. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
 
 Don't ask permission. Just do it.
 
@@ -33,21 +23,6 @@ You wake up fresh each session. These files are your continuity:
 
 - **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
 - **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
-- **Wiki Memory:** official REED memory now lives in `knowledge-base/wiki/`
-  - Read from:
-    - `knowledge-base/wiki/sessions/*-active.md`
-    - `knowledge-base/wiki/index.md`
-    - `knowledge-base/wiki/log.md`
-  - Fallback: if `knowledge/` is requested or missing, redirect to `knowledge-base/wiki/`
-- **Boundary policy:**
-  - `INBOX` = intake layer only
-  - `Hermes` = operational continuity and action memory
-  - `Wiki` = durable canon for reusable knowledge
-  - Do not let `INBOX` become a final bucket
-  - Do not let `Hermes` become a wiki
-  - Do not let `Wiki` become agent RAM
-- **Canon buckets:** `Research`, `Frameworks`, `SOPs`, `Decisions`, `Incidents`
-  - `Sources` is supporting context inside canon entries, not a top-level canon bucket
 
 Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
 
@@ -231,55 +206,6 @@ Periodically (every few days), use a heartbeat to:
 Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
 
 The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
-
-## Session Log
-
-Catatan di bawah ini adalah log historis. Jangan jadikan sebagai source of truth runtime saat ini tanpa verifikasi live.
-
-### 2026-04-15: Ollama Cloud Models Integration (Historical Pre-Hermes Note)
-
-**Task:** Menambahkan 10 model Ollama Cloud ke REED/SecondBrain agar dapat dipilih dengan safety tier.
-
-**Models yang ditambahkan:**
-| Model | Safety Tier |
-|-------|-------------|
-| gemma3 | Paling Ketat |
-| mistral-large-3 | Ketat |
-| glm-4.6 | Ketat-Menengah |
-| qwen3-vl | Menengah |
-| qwen3-coder | Menengah |
-| deepseek-v3.1 | Menengah-Longgar |
-| gpt-oss | Longgar |
-| minimax-m2.1 | Tidak Jelas |
-| kimi-k2 | Paling Longgar |
-| kimi-k2-thinking | Paling Longgar |
-
-**Files yang diupdate pada runtime lama:**
-- `/home/openclaw/.openclaw/openclaw.json` - Config utama gateway
-- `/home/openclaw/.openclaw/workspaces/reed-archivist/openclaw/openclaw.json.remote` - Workspace config
-- `/home/openclaw/.openclaw/agents/{main,reed-archivist,reed-builder,reed-researcher}/agent/models.json` - Per-agent model registry
-
-**Tantangan:** UI Telegram masih menampilkan (2) models karena cache model count di Telegram Bot API. Config sudah benar (10 models) tapi display count di picker belum update.
-
-**Root Cause:** Model picker di REED membaca dari file berbeda:
-- Gateway config: `openclaw.json` ✅ (10 models)
-- Agent registry: `agents/*/agent/models.json` ✅ (10 models)
-- Workspace config: `workspaces/reed-archivist/openclaw/openclaw.json.remote` ✅ (10 models)
-
-Tetapi Telegram Bot API menyimpan cache model count yang tampil di button `(2)`. Ini adalah cache di sisi Telegram, bukan di VPS.
-
-**Commands untuk verifikasi pada runtime lama:**
-```bash
-# Check model count
-cat /home/openclaw/.openclaw/openclaw.json | jq '.models.providers."ollama-cloud".models | length'
-
-# Restart gateway
-systemctl --user restart openclaw-gateway.service
-
-# Force refresh (clear session cache)
-rm -f /home/openclaw/.openclaw/agents/*/sessions/*.jsonl.bak-*
-echo '{"version": 2, "lastUpdateId": 534400000, "botId": "8648903806"}' > /home/openclaw/.openclaw/telegram/update-offset-default.json
-```
 
 ## Make It Yours
 

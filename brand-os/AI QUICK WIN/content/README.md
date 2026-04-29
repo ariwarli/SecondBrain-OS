@@ -7,7 +7,7 @@ Subfolders:
 - inbox/ — voice note transcription dan ide konten mentah
 
 Routing dari Inbox:
-- Ide konten → openclaw/secondbrain/content-ideas.md (append)
+- Ide konten → `personal-brand/ideas-bank/` (append)
 - Draft/post → drafts/YYYY-MM-DD_platform.md
 - Voice note → inbox/YYYY-MM-DD_voice.md
 

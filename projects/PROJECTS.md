@@ -1,6 +1,6 @@
 # Active Projects — Master Index
 
-Di-generate dari sync antara Claude Desktop Projects + OpenClaw workspace.
+Di-generate dari sync antara Claude Desktop Projects + Hermes workspace.
 Last updated: 2026-04-10
 
 **Rule:** Ini satu-satunya file yang REED baca untuk tau "ada project apa aja". Update otomatis tiap kali ada inbox item yang masuk ke project folder.
@@ -22,14 +22,14 @@ Last updated: 2026-04-10
 
 | # | Project | Type | Status | Last Update | Context Path |
 |---|---------|------|--------|-------------|--------------|
-| 1 | Brand OS - Bani Risset | Brand/Content | Active | Apr 10 | `Brand OS - Bani Risset/BRAND_DNA.md` |
-| 2 | Content OS | Content System | Active | Apr 6 | `Brand OS - Bani Risset/content/` |
-| 3 | Ghostwriter | Content Tool | Active | - | `Brand OS - Bani Risset/ghostwriter/` |
-| 4 | Tools OS - CLAW | OpenClaw Infra | Active | Apr 10 | `openclaw/` |
+| 1 | Brand OS - Bani Risset | Brand/Content | Active | Apr 29 | `brand-os/BRAND_DNA.md` |
+| 2 | Content OS | Content System | Active | Apr 29 | `personal-brand/threads/drafts/` |
+| 3 | Ghostwriter | Content Tool | Transitional | Apr 29 | `brand-os/claude-project/` |
+| 4 | Tools OS - CLAW | Hermes Infra | Active | Apr 29 | `ops/` |
 | 5 | Tools OS - PARA | Org System | Active | Apr 4 | `projects/para/` |
 | 6 | Tool Lab - Chrome Extension | Dev | Dev | Apr 6 | `projects/tool-lab/chrome-ext/` |
 | 7 | Tool Lab - WordPress OS | Dev | Dev | Apr 6 | `projects/tool-lab/wordpress-os/` |
-| 8 | Ops OS | Infra/Ops | Active | Apr 6 | `openclaw/ops/` |
+| 8 | Ops OS | Infra/Ops | Active | Apr 29 | `ops/` |
 
 ---
 

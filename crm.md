@@ -52,7 +52,7 @@ File ini di-generate otomatis dari inbox items yang terkait kontak/relasi.
 
 ---
 
-## Notes For OpenClaw
+## Notes For Hermes
 
 - File ini auto-update dari inbox items yang terkait orang/kontak.
 - REED DULL kirim reminder di topic `personal-crm` kalau ada follow-up yang overdue.

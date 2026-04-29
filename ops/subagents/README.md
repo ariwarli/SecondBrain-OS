@@ -1,12 +1,12 @@
 <!--
 Tujuan: roster dan aturan aktivasi subagent untuk workspace Hermes
 Caller: agent utama saat akan delegasi atau setup overnight work
-Dependensi: openclaw.md, automation/schedule.yaml, knowledge-base/wiki/index.md
+Dependensi: hermes.md, automation/schedule.yaml, knowledge-base/wiki/index.md
 Main Functions: mendefinisikan kapan spawn agent, output default, dan guardrail
 Side Effects: memengaruhi delegation, riset, build, dan ingestion lane
 -->
 
-# OpenClaw Subagent Pack
+# Hermes Subagent Pack
 
 Status dokumen ini: transitional worker contract selama migrasi ke REED runtime baru.
 
@@ -16,8 +16,8 @@ Target architecture:
 - delegation contract final mengikuti `docs/REED_RUNTIME_ARCHITECTURE.md`
 
 Source of truth:
-- Local operating state: `/Users/banirisset/banirisset/openclaw/openclaw.md`
-- NotebookLM: `OpenClaw` (`05667e4d-493c-4236-83a4-ae74dadb178e`)
+- Local operating state: `/Users/banirisset/2_Areas/banirisset/hermes.md`
+- NotebookLM legacy source: `OpenClaw` (`05667e4d-493c-4236-83a4-ae74dadb178e`)
 
 NotebookLM sources used:
 - `1. Subagents` (`e3e86ed2-57fd-410b-8f54-38b5702f6d39`)
@@ -60,7 +60,7 @@ Phase 1 activation:
 ## Spawn Examples
 
 ```text
-/subagents spawn reed-builder "Build the Todoist visibility helper from openclaw/docs/openclaw-phase-2.md. Keep edits scoped."
+/subagents spawn reed-builder "Build the Todoist visibility helper from projects/hermes-phase-2.md. Keep edits scoped."
 ```
 
 ```text

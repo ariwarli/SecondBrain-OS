@@ -7,7 +7,7 @@ Isi tetap singkat. Simpan hanya preferensi yang benar-benar mengubah perilaku ag
 ## Identity
 
 - Name: Bani Risset
-- Primary workspace: `/Users/banirisset/banirisset`
+- Primary workspace: `/Users/banirisset/2_Areas/banirisset`
 
 ## Communication Preferences
 
@@ -18,7 +18,7 @@ Isi tetap singkat. Simpan hanya preferensi yang benar-benar mengubah perilaku ag
 
 ## Operating Preferences
 
-- Telegram jadi interface utama untuk OpenClaw
+- Telegram jadi interface utama untuk REED/Hermes
 - SSH hanya untuk admin, debug, dan config
 - Voice notes boleh diprioritaskan untuk capture cepat
 - Semua task >10 menit harus punya status yang jelas

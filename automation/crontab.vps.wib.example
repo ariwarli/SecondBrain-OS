@@ -1,45 +1,45 @@
 # Tujuan: contoh cron VPS WIB untuk scheduler Hermes phase 1
 # Caller: operator VPS saat server sudah memakai timezone WIB
-# Dependensi: /home/openclaw/automation/run-telegram-job.sh, jobs/*.md, telegram-config.json
+# Dependensi: /home/hermes/automation/run-telegram-job.sh, jobs/*.md, telegram-config.json
 # Main Functions: baseline cron yang aman untuk phase 1
 # Side Effects: mengirim prompt scheduler ke topic Telegram
 
-# OpenClaw scheduler blueprint for VPS
+# Hermes scheduler blueprint for VPS
 # Server timezone assumed: Asia/Jakarta (WIB)
-# User: openclaw
+# User: hermes
 
 # Morning brief
-0 7 * * * /home/openclaw/automation/run-telegram-job.sh morning_brief /home/openclaw/automation/jobs/morning-brief.md updates
+0 7 * * * /home/hermes/automation/run-telegram-job.sh morning_brief /home/hermes/automation/jobs/morning-brief.md updates
 
 # Daily smoke check
-15 6 * * * set -a; . /home/openclaw/automation/telegram-runner.env; set +a; /usr/bin/python3 /home/openclaw/automation/check_scheduler_health.py >> /home/openclaw/automation/logs/scheduler_health.log 2>&1
+15 6 * * * set -a; . /home/hermes/automation/telegram-runner.env; set +a; /usr/bin/python3 /home/hermes/automation/check_scheduler_health.py >> /home/hermes/automation/logs/scheduler_health.log 2>&1
 
 # CRM review
-0 8 * * * /home/openclaw/automation/run-telegram-job.sh crm_review /home/openclaw/automation/jobs/crm-review.md personal-crm
+0 8 * * * /home/hermes/automation/run-telegram-job.sh crm_review /home/hermes/automation/jobs/crm-review.md personal-crm
 
 # Security audit
 # Phase 1: keep manual until security lane is verified end-to-end.
-# 0 9 * * * /home/openclaw/.npm-global/bin/openclaw security audit --deep >> /home/openclaw/.openclaw/logs/security-audit.log 2>&1
+# 0 9 * * * /home/hermes/.local/bin/hermes security audit --deep >> /home/hermes/.hermes/logs/security-audit.log 2>&1
 
 # Content nag
-0 10 * * * /home/openclaw/automation/run-telegram-job.sh content_nag_1 /home/openclaw/automation/jobs/content-nag.md content morning
-0 13 * * * /home/openclaw/automation/run-telegram-job.sh content_nag_2 /home/openclaw/automation/jobs/content-nag.md content midday
-0 16 * * * /home/openclaw/automation/run-telegram-job.sh content_nag_3 /home/openclaw/automation/jobs/content-nag.md content final
+0 10 * * * /home/hermes/automation/run-telegram-job.sh content_nag_1 /home/hermes/automation/jobs/content-nag.md content morning
+0 13 * * * /home/hermes/automation/run-telegram-job.sh content_nag_2 /home/hermes/automation/jobs/content-nag.md content midday
+0 16 * * * /home/hermes/automation/run-telegram-job.sh content_nag_3 /home/hermes/automation/jobs/content-nag.md content final
 
 # Silent heartbeats every 4 hours during active window
-30 10 * * * /home/openclaw/automation/run-telegram-job.sh heartbeat_1 /home/openclaw/automation/jobs/heartbeat.md updates
-30 14 * * * /home/openclaw/automation/run-telegram-job.sh heartbeat_2 /home/openclaw/automation/jobs/heartbeat.md updates
-30 18 * * * /home/openclaw/automation/run-telegram-job.sh heartbeat_3 /home/openclaw/automation/jobs/heartbeat.md updates
-30 22 * * * /home/openclaw/automation/run-telegram-job.sh heartbeat_4 /home/openclaw/automation/jobs/heartbeat.md updates
+30 10 * * * /home/hermes/automation/run-telegram-job.sh heartbeat_1 /home/hermes/automation/jobs/heartbeat.md updates
+30 14 * * * /home/hermes/automation/run-telegram-job.sh heartbeat_2 /home/hermes/automation/jobs/heartbeat.md updates
+30 18 * * * /home/hermes/automation/run-telegram-job.sh heartbeat_3 /home/hermes/automation/jobs/heartbeat.md updates
+30 22 * * * /home/hermes/automation/run-telegram-job.sh heartbeat_4 /home/hermes/automation/jobs/heartbeat.md updates
 
 # End of day summary
-0 18 * * * /home/openclaw/automation/run-telegram-job.sh end_of_day_summary /home/openclaw/automation/jobs/end-of-day-summary.md updates
+0 18 * * * /home/hermes/automation/run-telegram-job.sh end_of_day_summary /home/hermes/automation/jobs/end-of-day-summary.md updates
 
 # Overnight staggered subagents
 # Phase 1: manual trigger only.
-# 0 1 * * * /home/openclaw/automation/run-telegram-job.sh overnight_research /home/openclaw/automation/jobs/overnight-research.md tasks
-# 30 1 * * * /home/openclaw/automation/run-telegram-job.sh overnight_leads /home/openclaw/automation/jobs/overnight-leads.md personal-crm
-# 0 2 * * * /home/openclaw/automation/run-telegram-job.sh overnight_builder /home/openclaw/automation/jobs/overnight-builder.md tasks
+# 0 1 * * * /home/hermes/automation/run-telegram-job.sh overnight_research /home/hermes/automation/jobs/overnight-research.md tasks
+# 30 1 * * * /home/hermes/automation/run-telegram-job.sh overnight_leads /home/hermes/automation/jobs/overnight-leads.md personal-crm
+# 0 2 * * * /home/hermes/automation/run-telegram-job.sh overnight_builder /home/hermes/automation/jobs/overnight-builder.md tasks
 
 # Existing hardening job
-0 * * * * chmod 600 /home/openclaw/.openclaw/agents/main/sessions/*.jsonl* /home/openclaw/.openclaw/workspace/memory/*.md 2>/dev/null
+0 * * * * chmod 600 /home/hermes/.hermes/sessions/*.jsonl* /home/hermes/.hermes/memory/*.md 2>/dev/null

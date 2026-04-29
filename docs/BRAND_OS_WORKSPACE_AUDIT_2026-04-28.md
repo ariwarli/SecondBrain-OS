@@ -3,16 +3,16 @@
 ## Metadata
 - Date: 2026-04-28
 - Workspace: `/Users/banirisset/2_Areas/banirisset`
-- Brand OS source of truth: `/Users/banirisset/2_Areas/banirisset/Brand OS - Bani Risset`
+- Brand OS source of truth: `/Users/banirisset/2_Areas/banirisset/brand-os`
 - Search method: exact-match audit for `"Bani Risset"` plus direct public profile checks without login
 
 ## Executive Summary
 `/Users/banirisset/2_Areas/banirisset` is the canonical `SecondBrain OS` operating hub. It already has strong lane separation for inbox, knowledge, ops, research, clients, wellbeing, and personal brand execution, but the mapping between Telegram topics and filesystem paths is still partly implicit.
 
-Brand positioning is materially stronger inside `Brand OS - Bani Risset` than in older execution documents. The main brand baseline is already clear: `Digital & AI Strategist`, Threads angle `AI Strategist yang ngomong bisnis, bukan coding`, and proof stack around `18 tahun`, `1000+ clients`, `4 negara`, and `Google & Meta Certified`. The primary risk is not absence of positioning. The risk is drift across duplicated folders, older docs, and public surfaces that still expose older labels such as `Digital Marketer` or legacy blog-first identity.
+Brand positioning is materially stronger inside `brand-os` than in older execution documents. The main brand baseline is already clear: `Digital & AI Strategist`, Threads angle `AI Strategist yang ngomong bisnis, bukan coding`, and proof stack around `18 tahun`, `1000+ clients`, `4 negara`, and `Google & Meta Certified`. The primary risk is not absence of positioning. The risk is drift across duplicated folders, older docs, and public surfaces that still expose older labels such as `Digital Marketer` or legacy blog-first identity.
 
 ## Scope And Decisions
-- `Brand OS - Bani Risset` under `2_Areas/banirisset` is the only source of truth for brand strategy going forward.
+- `brand-os` under `2_Areas/banirisset` is the only source of truth for brand strategy going forward.
 - `/Users/banirisset/banirisset/SECONDBRAIN-LLM/Brand OS - Bani Risset` is treated as a secondary copy that must not drive new decisions.
 - This audit uses `Top 10 brand mentions`, not a full 10-page SERP crawl.
 - No repository files were changed as part of the audit except this report artifact.
@@ -21,7 +21,7 @@ Brand positioning is materially stronger inside `Brand OS - Bani Risset` than in
 
 ### Canonical Operating Files
 - Main area instructions: `/Users/banirisset/2_Areas/banirisset/AGENTS.md`
-- Runtime and operating state: `/Users/banirisset/2_Areas/banirisset/openclaw.md`
+- Runtime and operating state: `/Users/banirisset/2_Areas/banirisset/hermes.md`
 - Inbox routing rules: `/Users/banirisset/2_Areas/banirisset/docs/INBOX_ROUTING.md`
 - Daily lane: `/Users/banirisset/2_Areas/banirisset/daily.md`
 - CRM lane: `/Users/banirisset/2_Areas/banirisset/crm.md`
@@ -32,8 +32,8 @@ Brand positioning is materially stronger inside `Brand OS - Bani Risset` than in
 | Inbox | `inbox/` | Explicit |
 | Knowledge-base | `knowledge-base/`, `knowledge-base/wiki/` | Explicit |
 | Wellbeing | `wellbeing/`, `core/WELLBEING_SYSTEM.md` | Explicit |
-| Ops | `ops/`, `openclaw.md` | Explicit |
-| Content | `Brand OS - Bani Risset/`, `personal-brand/` | Explicit |
+| Ops | `ops/`, `hermes.md` | Explicit |
+| Content | `brand-os/`, `personal-brand/` | Explicit |
 | General | No strong filesystem lane; operational docs say this should not be treated as active work canon | Ambiguous |
 | Tasks | `daily.md`, `projects/` | Implicit |
 | Personal-crm | `crm.md` | Implicit |
@@ -47,8 +47,8 @@ Brand positioning is materially stronger inside `Brand OS - Bani Risset` than in
 
 ### Internal Structure Assessment
 - The workspace is structurally usable as an operating system, not just a note dump.
-- `Brand OS - Bani Risset` and `personal-brand/` form a two-layer content system:
-  - `Brand OS - Bani Risset` holds positioning, offers, voice, templates, and workflow rules.
+- `brand-os` and `personal-brand/` form a two-layer content system:
+  - `brand-os` holds positioning, offers, voice, templates, and workflow rules.
   - `personal-brand/` holds execution materials such as context, content calendar, drafts, carousel assets, and research.
 - Some chat topics still map to files rather than dedicated folders. This is workable, but it makes ownership and automation less obvious.
 - `qmd` is not available in the current environment, so local note search still depends on ordinary file search instead of indexed markdown retrieval.
@@ -57,10 +57,10 @@ Brand positioning is materially stronger inside `Brand OS - Bani Risset` than in
 
 ### Core Brand Baseline
 The strongest current baseline appears in:
-- `Brand OS - Bani Risset/BRAND_DNA.md`
-- `Brand OS - Bani Risset/WORKFLOW_OS.md`
-- `Brand OS - Bani Risset/DELEGATION_RULES.md`
-- `Brand OS - Bani Risset/content-system.md`
+- `brand-os/BRAND_DNA.md`
+- `brand-os/WORKFLOW_OS.md`
+- `brand-os/DELEGATION_RULES.md`
+- `brand-os/content-system.md`
 
 Current baseline from those files:
 - Positioning: `Digital & AI Strategist`
@@ -84,7 +84,7 @@ High-signal example:
 
 ### Duplicate Folder Risk
 Two Brand OS folders exist:
-- Primary: `/Users/banirisset/2_Areas/banirisset/Brand OS - Bani Risset`
+- Primary: `/Users/banirisset/2_Areas/banirisset/brand-os`
 - Secondary: `/Users/banirisset/banirisset/SECONDBRAIN-LLM/Brand OS - Bani Risset`
 
 Observed split:
@@ -163,7 +163,7 @@ Third-party uncontrolled:
 ## Action Plan
 
 ### P1: Canonicalize Brand Source
-1. Keep `/Users/banirisset/2_Areas/banirisset/Brand OS - Bani Risset` as the sole planning baseline.
+1. Keep `/Users/banirisset/2_Areas/banirisset/brand-os` as the sole planning baseline.
 2. Audit the secondary `SECONDBRAIN-LLM` copy file-by-file.
 3. Migrate unique useful content from the secondary copy into the primary location.
 4. After migration, convert the secondary copy into either:

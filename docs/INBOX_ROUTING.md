@@ -1,7 +1,7 @@
 <!--
 Tujuan: source of truth routing Inbox Telegram ke topic dan bucket kerja Hermes
 Caller: agent utama REED, subagent archivist, dan operator workspace
-Dependensi: AGENTS.md, SOUL.md, openclaw.md, daily.md, crm.md
+Dependensi: AGENTS.md, SOUL.md, hermes.md, daily.md, crm.md
 Main Functions: classify inbox, route ke topic, konfirmasi balik, tentukan kapan item naik ke wiki
 Side Effects: update topic kerja, daily.md, crm.md, dan knowledge-base/wiki bila item layak jadi canon
 -->
@@ -43,7 +43,7 @@ Inbox adalah surface capture tercepat. Inbox bukan tempat final.
 - Trigger: ide post, hook, caption, thread, carousel, draft publish
 - Route default: `content`
 - Path default:
-  - `Brand OS - Bani Risset/`
+  - `brand-os/`
   - `personal-brand/`
 
 ### CRM
