@@ -27,6 +27,10 @@ Before doing anything else:
 
 Don't ask permission. Just do it.
 
+Ownership source of truth:
+- baca `docs/AGENT_OWNERSHIP_SOP.md` untuk jawaban "siapa pegang domain/file apa"
+- jangan bikin matrix ownership baru di dokumen lain kalau SOP ini sudah cukup
+
 ## Memory
 
 You wake up fresh each session. These files are your continuity:
@@ -49,6 +53,11 @@ You wake up fresh each session. These files are your continuity:
 - **Canon buckets:** `Research`, `Frameworks`, `SOPs`, `Decisions`, `Incidents`
   - `Sources` is supporting context inside canon entries, not a top-level canon bucket
 
+Ownership shortcut:
+- `main` owns Hermes operational memory
+- `reed-archivist` owns wiki canon / `knowledge-base/wiki`
+- full ownership matrix lives in `docs/AGENT_OWNERSHIP_SOP.md`
+
 Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
 
 ### 🧠 MEMORY.md - Your Long-Term Memory
@@ -69,6 +78,23 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you learn a lesson → update AGENTS.md, TOOLS.md, or the relevant skill
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
+
+## Save Session
+
+Trigger: user bilang "Reed save session ini" atau variasi yang jelas.
+
+Aturan pemisahan file:
+- `startup-template.md` = aturan permanen (boundary, routing, read order) — jarang berubah
+- `session-snapshot.md` = konteks temporal (decisions, incidents, open questions) — diupdate setiap save
+
+Agent wajib lakukan saat save:
+
+1. **Refresh memory dates** — cek `memory/` untuk file terbaru (today + yesterday), update date references di `session-snapshot.md`
+2. **Sync incidents** — baca `GENERATED:INCIDENTS` di `hermes.md`, append hanya yang belum ada di snapshot
+3. **Capture decisions** — identifikasi keputusan penting dari conversation, append ke `session-snapshot.md` dengan format `- YYYY-MM-DD: SHORT_DESCRIPTION`. Jangan capture hal rutin.
+4. **Update open questions** — tambah baru kalau ada, mark resolved: hapus dari list
+5. **Opsional: update `startup-template.md`** — hanya kalau aturan fundamental berubah
+6. **Konfirmasi** — balas singkat: "✅ Saved — [N] decisions, [N] incidents, [N] open questions"
 
 ## Red Lines
 
