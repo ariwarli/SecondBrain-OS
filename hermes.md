@@ -146,6 +146,13 @@ Catatan penting:
 - topic test paling aman untuk diagnosis cepat adalah `ops`
 - topic `content` adalah drafting lane; pada fresh turn runtime sekarang menerapkan alias `speedup-brand` secara otomatis
 - `General` bukan topic kerja aktif dan jangan dipakai sebagai patokan
+
+## WhatsApp Outbound
+
+- outbound WhatsApp bukan command mentah; pakai skill `/wa-send`
+- target harus format `whatsapp:+E164`
+- scope awal 1:1 ke kontak yang memang di-allow atau disetujui user
+- jangan pakai untuk broadcast, grup, atau outreach tak diminta
 <!-- GENERATED:TELEGRAM_MAP:END -->
 
 ## Notebook Translation
