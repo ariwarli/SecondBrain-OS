@@ -8,21 +8,28 @@ Side Effects: update topic kerja, daily.md, crm.md, dan knowledge-base/wiki bila
 
 # INBOX_ROUTING
 
-Inbox adalah surface capture tercepat. Inbox bukan tempat final.
+Inbox adalah surface capture tercepat. Inbox bukan tempat final, bukan tempat kerja aktif, dan bukan tempat recap status.
 
 ## Boundary
 
 - `INBOX` = capture
 - `tasks/content/personal-crm/ops/knowledge-base/updates` = operational destinations
 - `Wiki` = canon durable
+- owner routing + reply behavior di `Inbox` = `main`
+- owner staging `inbox/pending`, `processed`, `unsorted` = `reed-archivist`
 
 ## Routing Flow
 
 1. Classify isi pesan
 2. Route ke topic kerja yang tepat
 3. Reply confirmation singkat di Inbox
-4. Execute task bila memang perlu aksi lanjutan
+4. Lanjutkan execution dan dialog kerja hanya di topic tujuan
 5. Naikkan ke wiki hanya jika item punya nilai reuse jangka panjang
+
+Prinsip keras:
+- `Inbox` hanya boleh berisi ack singkat hasil routing
+- execution, clarification kerja, dan percakapan lanjutan harus pindah ke lane tujuan
+- jangan gunakan `Inbox` untuk reminder management, active to-do management, atau recap progres
 
 ## Buckets
 
@@ -85,7 +92,44 @@ Inbox adalah surface capture tercepat. Inbox bukan tempat final.
 
 ```text
 ✅ [ROUTED → bucket] path/file
-Next: [action selanjutnya]
+Next: lanjut di [lane tujuan]
+```
+
+Aturan format:
+- maksimum 2 baris
+- singkat saja, tanpa recap, prioritas, atau breakdown kerja
+- `Next:` hanya boleh menunjuk lane tujuan, misalnya `Next: lanjut di tasks`
+
+Contoh yang boleh:
+
+```text
+✅ [ROUTED → Task] daily.md
+Next: lanjut di tasks
+```
+
+```text
+✅ [ROUTED → CRM] crm.md
+Next: lanjut di personal-crm
+```
+
+Tidak boleh di `Inbox`:
+- recap status sekarang
+- daftar to-do aktif lengkap
+- penentuan prioritas awal
+- pertanyaan seperti `mau mulai dari mana?`
+- penjelasan panjang setelah routing
+- jawaban seperti `gw cek to-do list lu hari ini`
+- status seperti `belum ada yang dikerjain`
+- rundown `setelah selesai nanti`
+
+Kasus screenshot yang salah:
+- jika user minta atau sistem tergoda memberi to-do list harian, status pending, atau urutan kerja, route ke `tasks`
+- jika perlu diskusi `mulai dari nomor berapa`, lakukan di `tasks`
+- `Inbox` tetap hanya ack singkat, misalnya:
+
+```text
+✅ [ROUTED → Task] daily.md
+Next: lanjut di tasks
 ```
 
 ## Completion Signals
@@ -124,8 +168,20 @@ Satu pesan boleh dipecah menjadi lebih dari satu objek.
 Contoh:
 - ide ebook -> `content`
 - reminder follow-up jam 15:00 -> `tasks`
+- reminder meeting -> `tasks`
+- to-do aktif -> `tasks`
+- setup Google Calendar -> `tasks` atau `ops` sesuai intent
 
 Jangan paksa semua isi pesan tinggal di satu topic bila fungsinya beda.
+
+Jika satu pesan memuat banyak fungsi:
+- split menjadi objek terpisah per fungsi
+- route tiap objek ke lane yang tepat
+- `Inbox` hanya ack hasil split/routing, bukan membahas semua objek itu satu per satu
+
+Aturan untuk status/to-do request:
+- request `cek to-do`, `status hari ini`, `apa yang pending`, `reminder meeting`, dan sejenisnya diperlakukan sebagai `Task`
+- jawabannya harus muncul di `tasks`, bukan `Inbox`
 
 ## Canon Escalation Rule
 

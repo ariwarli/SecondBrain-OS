@@ -42,8 +42,9 @@ Untuk prosedur kerja yang harus diulang konsisten.
 
 Masuk sini bila dokumen menjawab: "bagaimana menjalankan sesuatu?"
 
-Current canon entry:
+Current canon entries:
 - `knowledge-base/wiki/SOPs/sop-intake-dokumen-reed.md`
+- `knowledge-base/wiki/tailscale-setup.md` — Tailscale install, connect, SSH built-in, ACL
 
 ### `Decisions`
 

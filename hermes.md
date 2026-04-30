@@ -19,6 +19,10 @@ Untuk arsitektur target REED yang baru, gunakan juga:
 
 Gunakan file ini sebagai context boot di awal chat.
 
+Ownership source of truth:
+- untuk ownership agent/domain/file, pakai `docs/AGENT_OWNERSHIP_SOP.md`
+- `hermes.md` fokus pada runtime state dan compat notes, bukan roster ownership penuh
+
 Tujuan file ini:
 - memberi agent orientasi cepat tentang Hermes yang sedang aktif
 - menetapkan source of truth yang harus dipakai
@@ -180,9 +184,12 @@ User cuma kirim ke Inbox Telegram. REED yang klasifikasi + route + arsipkan.
 - Claude Desktop Projects ↔ Hermes Path mapping di `docs/INBOX_ROUTING.md`
 - PROJECTS.md = master index semua project aktif (REED baca ini untuk tau project apa aja)
 - daily.md + crm.md = auto-generated dari inbox items (jangan edit manual)
-- Flow: User kirim → REED klasifikasi → route ke folder → update PROJECTS.md → reply confirmation
+- Flow: User kirim → REED klasifikasi → route ke folder/lane → update file kerja relevan → reply ack singkat di Inbox
 - Kalau unsorted → simpan ke `inbox/unsorted/` + tanya user
 - Completion shorthand resmi untuk reminder/task adalah `done`; artinya open loop aktif terakhir yang relevan dianggap selesai kecuali konteksnya ambigu
+- Inbox hanya untuk capture + ack singkat. Jangan balas dengan status recap, daftar to-do, prioritas, atau pertanyaan kerja lanjutan di Inbox.
+- Kalau user minta cek to-do list, status kerja hari ini, reminder, atau "mulai dari mana", route ke `tasks` lalu jawab di `tasks`, bukan di Inbox.
+- Kalau satu pesan mencampur reminder, to-do, dan setup/tooling, split ke lane yang tepat; Inbox hanya ack hasil routing.
 
 ## Wiki Canon
 
@@ -234,6 +241,16 @@ Insiden penting yang masih relevan:
 - `/models` sekarang alias resmi dari `/model`, jadi tidak lagi diperlakukan sebagai pesan biasa yang meng-interrupt task aktif
 - saat agent masih jalan, `/model` dan `/models` sekarang memberi busy message yang lebih jelas: tunggu selesai atau `/stop` dulu, lalu fresh turn akan pakai topic policy lagi
 
+### 2026-04-29 (Proton Pass CLI Setup)
+
+- Proton Pass CLI terinstall via `brew install protonpass/tap/pass-cli`
+- GUI Proton Pass juga terinstall via `brew install --cask proton-pass`
+- Helper script dibuat: `ops/scripts/proton_pass_helper.py`
+- **Status: CLI ready, menunggu user login interaktif**
+- Command untuk login: `pass-cli login`
+- Helper functions tersedia: `lookup`, `verify`, `sync` (metadata only, no passwords)
+- Safety guard aktif: helper hanya return metadata (vault name, item exists, timestamp), tidak pernah expose password
+
 Implikasi tetap:
 - pakai runtime live Hermes untuk verifikasi akhir sebelum mengambil keputusan operasional
 - voice-to-text workflow adalah prioritas utama — jangan matikan tanpa konfirmasi user
@@ -246,12 +263,16 @@ Source of truth untuk skill dan agent:
 - runtime Hermes live
 - `docs/REED_RUNTIME_ARCHITECTURE.md`
 - `automation/reed-runtime-spec.yaml`
+- `docs/AGENT_OWNERSHIP_SOP.md` untuk ownership domain
 
 Agent lokal yang aktif di config:
 - `main`
 - `reed-builder`
 - `reed-researcher`
 - `reed-archivist`
+
+Role governance yang harus dianggap resmi:
+- `startup-doc-maintainer` untuk startup/handoff docs dan anti-proliferation rules
 
 Catatan dependency yang masih penting:
 - skill `qmd` terpasang, tetapi binary `bun` dan `qmd` belum ada di PATH lokal saat terakhir dicek

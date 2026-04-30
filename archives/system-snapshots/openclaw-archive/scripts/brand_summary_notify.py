@@ -7,8 +7,8 @@ import urllib.parse
 import urllib.request
 from typing import List, Tuple
 
-DEEPSEEK_KEY = os.environ.get("DEEPSEEK_API_KEY", "REDACTED_DEEPSEEK_API_KEY")
-BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8648903806:AAHOPtQsahTKgWKjFEVs86KMRcPA3MIT8dc")
+DEEPSEEK_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 CHAT_ID = "-1003344368011"
 TOPIC_ID = "11"
 REPO_DIR = "/home/openclaw/banirisset"
@@ -111,7 +111,7 @@ def fallback_summary(files: List[str]) -> str:
 
 def summarize_changes(commit_time: str, commit_subject: str, files: List[str], diff: str) -> str:
     file_list = "\n".join(f"- {os.path.basename(path)}" for path in files) or "- Tidak ada file markdown terdeteksi"
-    if not diff.strip():
+    if not diff.strip() or not DEEPSEEK_KEY:
         return fallback_summary(files)
 
     prompt = (
@@ -166,6 +166,8 @@ def build_message(commit_time: str, commit_subject: str, files: List[str], summa
 
 
 def send_telegram(text: str) -> None:
+    if not BOT_TOKEN:
+        raise RuntimeError("TELEGRAM_BOT_TOKEN is not set")
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     body = urllib.parse.urlencode(
         {

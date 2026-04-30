@@ -18,6 +18,7 @@ Target architecture:
 Source of truth:
 - Local operating state: `/Users/banirisset/2_Areas/banirisset/hermes.md`
 - NotebookLM legacy source: `OpenClaw` (`05667e4d-493c-4236-83a4-ae74dadb178e`)
+- Ownership source of truth: `/Users/banirisset/2_Areas/banirisset/docs/AGENT_OWNERSHIP_SOP.md`
 
 NotebookLM sources used:
 - `1. Subagents` (`e3e86ed2-57fd-410b-8f54-38b5702f6d39`)
@@ -56,6 +57,12 @@ Phase 1 activation:
 | `reed-builder` | Approved builds, internal tools, automation prototypes, overnight implementation | changed files, artifact paths, tests, next decision |
 | `reed-researcher` | Competitor research, market scans, SEO research, source synthesis | markdown report under `research/YYYY-MM-DD/` |
 | `reed-archivist` | CRM follow-up processing, knowledge-base ingestion, saved URL/PDF summarization, canon promotion prep | `crm.md` updates or knowledge summary |
+
+Ownership reminder:
+- `reed-archivist` owns canon promotion into `knowledge-base/wiki`
+- `reed-researcher` owns research output before canon promotion
+- `reed-builder` owns implementation output
+- `main` owns cross-domain decisions and Hermes operational memory
 
 ## Spawn Examples
 
