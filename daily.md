@@ -33,11 +33,12 @@ File ini adalah scoreboard harian REED/Hermes. Update minimal sekali per hari da
 - CRM contact names missing for NIRVA, APPS, SentraChat, APPSSYNC, and PT SIN.
 - No invoice/payment status captured yet for active delivery pipeline.
 
-## Today Focus
+## Today Focus (2026-05-03)
 
+- [ ] Clear open loops dari migrasi REED (Menu slash commands di Telegram).
 - [ ] Fill CRM contact names for active revenue clients.
 - [ ] Touch top 3 revenue opportunities: NIRVA, APPS, STOP TB.
-- [ ] Capture collected/invoiced amount before end-of-day summary.
+- [ ] Setup interactive login untuk Proton Pass CLI.
 
 ---
 
@@ -48,7 +49,7 @@ File ini adalah scoreboard harian REED/Hermes. Update minimal sekali per hari da
 - Iyan: PDF captured
 - Teh Fitri: rate card needed
 
-## Done Today
+## Done
 - [x] Opsi 2 setup (DM + passive sync)
 - [x] Tailscale connected + SSH key setup
 - [x] Pipeline tracker files created

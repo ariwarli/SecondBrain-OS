@@ -99,24 +99,24 @@ Prinsip keras:
 
 ```text
 ✅ [ROUTED → bucket] path/file
-Next: lanjut di [lane tujuan]
+Notifikasi telah dikirim ke [lane tujuan]
 ```
 
 Aturan format:
 - maksimum 2 baris
 - singkat saja, tanpa recap, prioritas, atau breakdown kerja
-- `Next:` hanya boleh menunjuk lane tujuan, misalnya `Next: lanjut di tasks`
+- REED **WAJIB** mengirimkan notifikasi ping berisi ringkasan/link ke topik tujuan sesaat setelah membalas di Inbox.
 
 Contoh yang boleh:
 
 ```text
 ✅ [ROUTED → Task] daily.md
-Next: lanjut di tasks
+Notifikasi telah dikirim ke tasks
 ```
 
 ```text
 ✅ [ROUTED → CRM] crm.md
-Next: lanjut di personal-crm
+Notifikasi telah dikirim ke personal-crm
 ```
 
 Tidak boleh di `Inbox`:
@@ -154,7 +154,7 @@ Kasus screenshot yang salah:
 
 ```text
 ✅ [ROUTED → Task] daily.md
-Next: lanjut di tasks
+Notifikasi telah dikirim ke tasks
 ```
 
 ## Completion Signals
@@ -219,3 +219,12 @@ Item dari `knowledge-base` atau lane lain baru naik ke wiki jika memenuhi salah 
 - `Incidents` = ada failure, root cause, fix, atau preventive lesson
 
 Link mentah, PDF mentah, dan notes mentah tidak otomatis jadi canon.
+
+## Brainstorming di Command Center
+
+User diizinkan menggunakan `Command Center` untuk melakukan brainstorming ide skala besar yang melintasi berbagai batas proyek dan topik.
+
+Jika user melakukan hal ini:
+- REED sebagai otak utama (`main`) WAJIB me-load file terkait dari multi-direktori (misalnya dari folder `clients`, `brand-os`, dan `knowledge-base/wiki` secara bersamaan).
+- REED boleh menyajikan gagasan yang komprehensif di sini, tidak perlu dipecah/di-route ke lane spesifik (selama diskusi tersebut masih dalam tahap _brainstorming makro_).
+- Setelah brainstorming menghasilkan keputusan konkret atau rencana langkah kerja, barulah REED membuat handoff (mengekstrak ide eksekusi) ke lane-lane tujuannya, seperti `tasks` atau `content`.

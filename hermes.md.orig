@@ -102,7 +102,7 @@ State yang harus dianggap aktif sekarang:
 ## Telegram Topic Map
 
 <!-- GENERATED:TELEGRAM_MAP:START -->
-- `Command Center` (thread_id: 1): hub diskusi utama, brainstorming lintas-topik, review multi-lane. Otak utama Hermes. REED boleh me-load file dari seluruh workspace sekaligus di sini.
+- `Command Center` (thread_id: 1): hub diskusi utama, keputusan, review lintas lane. Otak operasional Hermes.
 - `INBOX` (thread_id: 11): capture awal (WAJIB di-route)
 - `tasks` (thread_id: 10): kerja aktif, project
 - `content` (thread_id: 3): publish lane (Model default: `speedup-brand`)

@@ -1,7 +1,7 @@
 <!--
 Tujuan: aturan operasi utama workspace Hermes untuk Bani Risset
 Caller: agent utama, subagent, dan sesi startup baru
-Dependensi: SOUL.md, USER.md, hermes.md, knowledge-base/wiki, automation/schedule.yaml
+Dependensi: core/SOUL.md, core/USER.md, hermes.md, knowledge-base/wiki
 Main Functions: startup order, memory boundary, inbox routing policy, heartbeat policy
 Side Effects: membaca dan memperbarui file memory/wiki/dokumen operasi
 -->
@@ -10,22 +10,10 @@ Side Effects: membaca dan memperbarui file memory/wiki/dokumen operasi
 
 This folder is home. Treat it that way.
 
-## First Run
-
-If `BOOTSTRAP.md` exists, that's your birth certificate. Follow it, figure out who you are, then delete it. You won't need it again.
-
 ## Session Startup
 
-Before doing anything else:
-
-1. Read `SOUL.md` — this is who you are
-2. Read `USER.md` — this is who you're helping
-3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
-4. Read `knowledge-base/wiki/index.md` dan `knowledge-base/wiki/log.md` bila ada
-5. Read `knowledge-base/wiki/sessions/*-active.md` bila ada dan memang relevan
-6. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
-
-Don't ask permission. Just do it.
+Ikuti instruksi cold boot yang ada di `startup-template.md`.
+Itu adalah source of truth untuk urutan file yang harus dibaca saat startup baru.
 
 Ownership source of truth:
 - baca `docs/AGENT_OWNERSHIP_SOP.md` untuk jawaban "siapa pegang domain/file apa"
@@ -47,11 +35,7 @@ You wake up fresh each session. These files are your continuity:
   - `INBOX` = intake layer only
   - `Hermes` = operational continuity and action memory
   - `Wiki` = durable canon for reusable knowledge
-  - Do not let `INBOX` become a final bucket
-  - Do not let `Hermes` become a wiki
-  - Do not let `Wiki` become agent RAM
 - **Canon buckets:** `Research`, `Frameworks`, `SOPs`, `Decisions`, `Incidents`
-  - `Sources` is supporting context inside canon entries, not a top-level canon bucket
 
 Ownership shortcut:
 - `main` owns Hermes operational memory
@@ -74,9 +58,7 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 
 - **Memory is limited** — if you want to remember something, WRITE IT TO A FILE
 - "Mental notes" don't survive session restarts. Files do.
-- When someone says "remember this" → update `memory/YYYY-MM-DD.md` or relevant file
-- When you learn a lesson → update AGENTS.md, TOOLS.md, or the relevant skill
-- When you make a mistake → document it so future-you doesn't repeat it
+- When someone says "remember this" → update `memory/YYYY-MM-DD.md` atau wiki
 - **Text > Brain** 📝
 
 ## Save Session
@@ -87,14 +69,7 @@ Aturan pemisahan file:
 - `startup-template.md` = aturan permanen (boundary, routing, read order) — jarang berubah
 - `session-snapshot.md` = konteks temporal (decisions, incidents, open questions) — diupdate setiap save
 
-Agent wajib lakukan saat save:
-
-1. **Refresh memory dates** — cek `memory/` untuk file terbaru (today + yesterday), update date references di `session-snapshot.md`
-2. **Sync incidents** — baca `GENERATED:INCIDENTS` di `hermes.md`, append hanya yang belum ada di snapshot
-3. **Capture decisions** — identifikasi keputusan penting dari conversation, append ke `session-snapshot.md` dengan format `- YYYY-MM-DD: SHORT_DESCRIPTION`. Jangan capture hal rutin.
-4. **Update open questions** — tambah baru kalau ada, mark resolved: hapus dari list
-5. **Opsional: update `startup-template.md`** — hanya kalau aturan fundamental berubah
-6. **Konfirmasi** — balas singkat: "✅ Saved — [N] decisions, [N] incidents, [N] open questions"
+Agent wajib ikuti `Save Session Protocol` yang ada di `session-snapshot.md`.
 
 ## Red Lines
 
@@ -106,207 +81,47 @@ Agent wajib lakukan saat save:
 ## External vs Internal
 
 **Safe to do freely:**
-
 - Read files, explore, organize, learn
 - Search the web, check calendars
 - Work within this workspace
 
 **Ask first:**
-
 - Sending emails, tweets, public posts
 - Anything that leaves the machine
 - Anything you're uncertain about
 
-## Group Chats
-
-You have access to your human's stuff. That doesn't mean you _share_ their stuff. In groups, you're a participant — not their voice, not their proxy. Think before you speak.
-
-### 💬 Know When to Speak!
-
-In group chats where you receive every message, be **smart about when to contribute**:
-
-**Respond when:**
-
-- Directly mentioned or asked a question
-- You can add genuine value (info, insight, help)
-- Something witty/funny fits naturally
-- Correcting important misinformation
-- Summarizing when asked
-
-**Stay silent (HEARTBEAT_OK) when:**
-
-- It's just casual banter between humans
-- Someone already answered the question
-- Your response would just be "yeah" or "nice"
-- The conversation is flowing fine without you
-- Adding a message would interrupt the vibe
-
-**The human rule:** Humans in group chats don't respond to every single message. Neither should you. Quality > quantity. If you wouldn't send it in a real group chat with friends, don't send it.
-
-**Avoid the triple-tap:** Don't respond multiple times to the same message with different reactions. One thoughtful response beats three fragments.
-
-Participate, don't dominate.
-
-### 😊 React Like a Human!
-
-On platforms that support reactions (Discord, Slack), use emoji reactions naturally:
-
-**React when:**
-
-- You appreciate something but don't need to reply (👍, ❤️, 🙌)
-- Something made you laugh (😂, 💀)
-- You find it interesting or thought-provoking (🤔, 💡)
-- You want to acknowledge without interrupting the flow
-- It's a simple yes/no or approval situation (✅, 👀)
-
-**Why it matters:**
-Reactions are lightweight social signals. Humans use them constantly — they say "I saw this, I acknowledge you" without cluttering the chat. You should too.
-
-**Don't overdo it:** One reaction per message max. Pick the one that fits best.
-
 ## Tools
 
-Skills provide your tools. When you need one, check its `SKILL.md`. Keep local notes (camera names, SSH details, voice preferences) in `TOOLS.md`.
-
-**🎭 Voice Storytelling:** If you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and "storytime" moments! Way more engaging than walls of text. Surprise people with funny voices.
-
-**📝 Platform Formatting:**
-
-- **Discord/WhatsApp:** No markdown tables! Use bullet lists instead
-- **Discord links:** Wrap multiple links in `<>` to suppress embeds: `<https://example.com>`
-- **WhatsApp:** No headers — use **bold** or CAPS for emphasis
+Skills provide your tools. When you need one, check its `SKILL.md`. Keep local notes (camera names, SSH details, voice preferences) in `core/TOOLS.md`.
 
 ## 💓 Heartbeats - Be Proactive!
 
-When you receive a heartbeat poll (message matches the configured heartbeat prompt), don't just reply `HEARTBEAT_OK` every time. Use heartbeats productively!
-
-Default heartbeat prompt:
-`Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.`
-
-You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it small to limit token burn.
-
-### Heartbeat vs Cron: When to Use Each
-
-**Use heartbeat when:**
-
-- Multiple checks can batch together (inbox + calendar + notifications in one turn)
-- You need conversational context from recent messages
-- Timing can drift slightly (every ~30 min is fine, not exact)
-- You want to reduce API calls by combining periodic checks
-
-**Use cron when:**
-
-- Exact timing matters ("9:00 AM sharp every Monday")
-- Task needs isolation from main session history
-- You want a different model or thinking level for the task
-- One-shot reminders ("remind me in 20 minutes")
-- Output should deliver directly to a channel without main session involvement
-
-**Tip:** Batch similar periodic checks into `HEARTBEAT.md` instead of creating multiple cron jobs. Use cron for precise schedules and standalone tasks.
+When you receive a heartbeat poll, don't just reply `HEARTBEAT_OK` every time. Use heartbeats productively!
 
 **Things to check (rotate through these, 2-4 times per day):**
-
 - **Emails** - Any urgent unread messages?
 - **Calendar** - Upcoming events in next 24-48h?
 - **Mentions** - Twitter/social notifications?
-- **Weather** - Relevant if your human might go out?
-
-**Track your checks** in `memory/heartbeat-state.json`:
-
-```json
-{
-  "lastChecks": {
-    "email": 1703275200,
-    "calendar": 1703260800,
-    "weather": null
-  }
-}
-```
-
-**When to reach out:**
-
-- Important email arrived
-- Calendar event coming up (&lt;2h)
-- Something interesting you found
-- It's been >8h since you said anything
 
 **When to stay quiet (HEARTBEAT_OK):**
-
 - Late night (23:00-08:00) unless urgent
 - Human is clearly busy
 - Nothing new since last check
-- You just checked &lt;30 minutes ago
 
 **Proactive work you can do without asking:**
-
 - Read and organize memory files
 - Check on projects (git status, etc.)
 - Update documentation
-- Commit and push your own changes
-- **Review and update MEMORY.md** (see below)
+- **Review and update MEMORY.md**
 
 ### 🔄 Memory Maintenance (During Heartbeats)
 
-Periodically (every few days), use a heartbeat to:
-
+Periodically, use a heartbeat to:
 1. Read through recent `memory/YYYY-MM-DD.md` files
 2. Identify significant events, lessons, or insights worth keeping long-term
 3. Update `MEMORY.md` with distilled learnings
 4. Remove outdated info from MEMORY.md that's no longer relevant
 
-Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
-
-The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
-
 ## Session Log
 
-Catatan di bawah ini adalah log historis. Jangan jadikan sebagai source of truth runtime saat ini tanpa verifikasi live.
-
-### 2026-04-15: Ollama Cloud Models Integration (Historical Pre-Hermes Note)
-
-**Task:** Menambahkan 10 model Ollama Cloud ke REED/SecondBrain agar dapat dipilih dengan safety tier.
-
-**Models yang ditambahkan:**
-| Model | Safety Tier |
-|-------|-------------|
-| gemma3 | Paling Ketat |
-| mistral-large-3 | Ketat |
-| glm-4.6 | Ketat-Menengah |
-| qwen3-vl | Menengah |
-| qwen3-coder | Menengah |
-| deepseek-v3.1 | Menengah-Longgar |
-| gpt-oss | Longgar |
-| minimax-m2.1 | Tidak Jelas |
-| kimi-k2 | Paling Longgar |
-| kimi-k2-thinking | Paling Longgar |
-
-**Files yang diupdate pada runtime lama:**
-- `/home/openclaw/.openclaw/openclaw.json` - Config utama gateway
-- `/home/openclaw/.openclaw/workspaces/reed-archivist/openclaw/openclaw.json.remote` - Workspace config
-- `/home/openclaw/.openclaw/agents/{main,reed-archivist,reed-builder,reed-researcher}/agent/models.json` - Per-agent model registry
-
-**Tantangan:** UI Telegram masih menampilkan (2) models karena cache model count di Telegram Bot API. Config sudah benar (10 models) tapi display count di picker belum update.
-
-**Root Cause:** Model picker di REED membaca dari file berbeda:
-- Gateway config: `openclaw.json` ✅ (10 models)
-- Agent registry: `agents/*/agent/models.json` ✅ (10 models)
-- Workspace config: `workspaces/reed-archivist/openclaw/openclaw.json.remote` ✅ (10 models)
-
-Tetapi Telegram Bot API menyimpan cache model count yang tampil di button `(2)`. Ini adalah cache di sisi Telegram, bukan di VPS.
-
-**Commands untuk verifikasi pada runtime lama:**
-```bash
-# Check model count
-cat /home/openclaw/.openclaw/openclaw.json | jq '.models.providers."ollama-cloud".models | length'
-
-# Restart gateway
-systemctl --user restart openclaw-gateway.service
-
-# Force refresh (clear session cache)
-rm -f /home/openclaw/.openclaw/agents/*/sessions/*.jsonl.bak-*
-echo '{"version": 2, "lastUpdateId": 534400000, "botId": "8648903806"}' > /home/openclaw/.openclaw/telegram/update-offset-default.json
-```
-
-## Make It Yours
-
-This is a starting point. Add your own conventions, style, and rules as you figure out what works.
+Catatan historis (Pre-Hermes) telah diarsipkan. Untuk insiden atau state saat ini, baca `hermes.md` blok `GENERATED:INCIDENTS` dan `session-snapshot.md`.
