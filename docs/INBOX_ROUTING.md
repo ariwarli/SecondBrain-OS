@@ -78,8 +78,15 @@ Prinsip keras:
   - tetap di operational lane bila masih mentah
   - naik ke wiki jika sudah ada synthesis, framework, keputusan, SOP, atau lesson
 
+### Updates
+
+- Trigger: brief harian, summary, laporan, notifikasi sistem, alert
+- Route default: `updates`
+- Path default: (Tidak punya folder khusus, data ditangkap ke `daily.md` atau `session-snapshot.md`)
+
 ## Topic Map
 
+- `command-center` = hub diskusi utama, keputusan, review lintas lane
 - `inbox` = capture awal
 - `tasks` = kerja aktif
 - `content` = publish lane
@@ -121,6 +128,24 @@ Tidak boleh di `Inbox`:
 - jawaban seperti `gw cek to-do list lu hari ini`
 - status seperti `belum ada yang dikerjain`
 - rundown `setelah selesai nanti`
+
+## Command Center Rule
+
+`command-center` adalah topik pimpinan untuk Hermes/REED.
+
+Boleh di sini:
+- diskusi umum lintas domain
+- planning dan prioritization
+- review status dari beberapa lane sekaligus
+- pengambilan keputusan dan delegasi
+
+Tidak ideal di sini:
+- output kerja final yang panjang dan sangat lane-spesifik
+- dialog operasional detail yang lebih cocok di `tasks`, `content`, `personal-crm`, `knowledge-base`, atau `ops`
+
+Aturan default:
+- kalau diskusi di `command-center` berubah jadi aksi konkret, Hermes harus membuat handoff jelas ke lane tujuan
+- setelah handoff, Hermes harus kembali memberi ringkasan keputusan atau status singkat ke `command-center`
 
 Kasus screenshot yang salah:
 - jika user minta atau sistem tergoda memberi to-do list harian, status pending, atau urutan kerja, route ke `tasks`

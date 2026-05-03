@@ -1,89 +1,54 @@
-# Daily Operations — Inbox-Driven
+# Daily Operating Scoreboard
 
-File ini di-generate otomatis dari inbox items yang masuk. REED update ini setiap kali ada task/task baru.
+File ini adalah scoreboard harian REED/Hermes. Update minimal sekali per hari dari `Command Center`, `tasks`, `personal-crm`, dan `updates`.
 
-**Sumber:** Inbox Telegram → REED Routing → daily.md
-**Update:** Auto (oleh REED) + Manual (oleh user kalau perlu)
+## Revenue Today
 
----
+| Metric | Value |
+|---|---:|
+| Target harian | IDR 5jt |
+| Actual collected hari ini | IDR 0 |
+| Invoiced hari ini | IDR 0 |
+| Pipeline touched hari ini | IDR 0 |
+| Gap ke target | IDR 5jt |
 
-## Date
+## Close This Week
 
-- Tanggal: 2026-04-10
-- Hari: Jumat
+| Client | Value | Stage | Owner Contact | Next Action | Due | Status |
+|---|---:|---|---|---|---|---|
+| NIRVA | IDR 15jt | Delivery | Contact missing | Minta feedback + confirm payment path | TBD | Needs contact |
+| APPS | IDR 12jt | Delivery | Contact missing | Progress check + identify close blocker | TBD | Needs contact |
+| STOP TB | IDR 8jt | Proposal | DEDE | Follow-up TOR/proposal review | TBD | Active |
 
----
+## Overdue Follow-Ups
 
-## Top 3 Priorities (dari Inbox)
+| Contact | Company | Action | Due | Revenue Impact |
+|---|---|---|---|---:|
+| Contact missing | NIRVA | Feedback request | Apr 12 | IDR 15jt |
+| Contact missing | APPS | Progress check | Apr 13 | IDR 12jt |
+| DEDE | STOP TB | Meeting follow-up | Apr 12 | IDR 8jt |
 
-1. Membuat TOR StopTB (meeting DEDE)
-2. Landing page v2 → NIRVA APPS
-3. AI chatbot integration doc → SentraChat
+## Blockers
 
----
+- CRM contact names missing for NIRVA, APPS, SentraChat, APPSSYNC, and PT SIN.
+- No invoice/payment status captured yet for active delivery pipeline.
 
-## Delegated To Hermes (dari Inbox Items)
+## Today Focus
 
-### Task: TOR StopTB
-- **Source:** Inbox Telegram
-- **Outcome:** TOR draft untuk partnership STOP TB
-- **Deadline:** Before meeting DEDE
-- **Status:** In Progress
-- **Context:** `clients/stop-tb/context.md`
-
-### Task: Landing Page v2 NIRVA
-- **Source:** Inbox Telegram
-- **Outcome:** Revised landing page copy
-- **Deadline:** ASAP
-- **Status:** In Progress
-- **Context:** `clients/nirva/context.md`
-
-### Task: SentraChat Integration Doc
-- **Source:** Inbox Telegram
-- **Outcome:** Integration document untuk dev team
-- **Deadline:** This week
-- **Status:** Pending
-- **Context:** `clients/sentrachat/context.md`
+- [ ] Fill CRM contact names for active revenue clients.
+- [ ] Touch top 3 revenue opportunities: NIRVA, APPS, STOP TB.
+- [ ] Capture collected/invoiced amount before end-of-day summary.
 
 ---
 
-## Waiting For
+# 2026-04-30 — Historical Notes
 
-| Who | Item | Since | Next Follow-up |
-|-----|------|-------|----------------|
-| DEDE (STOP TB) | Meeting confirmation | Apr 11 | Apr 12 |
-| NIRVA | Feedback landing page v1 | Apr 8 | Apr 12 |
-| APPS | Progress approval | Apr 8 | Apr 13 |
+## Pipeline
+- Iwa: H+6, PPT siap, butuh follow-up
+- Iyan: PDF captured
+- Teh Fitri: rate card needed
 
----
-
-## Content Queue (dari Inbox)
-
-| Item | Platform | Status | Scheduled |
-|------|----------|--------|-----------|
-| [TBD - from inbox voice notes] | Threads | Draft | - |
-| [TBD - from inbox ideas] | LinkedIn | Idea | - |
-
----
-
-## End Of Day Auto-Summary
-
-*Scheduler internal REED mengisi ini setiap 18:00 dari inbox items yang diproses hari ini.*
-
-- Yang selesai hari ini:
-- Yang pending:
-- Blocker:
-- Parkir ke besok:
-- Overnight tasks:
-
----
-
-## Rules
-
-- File ini di-update otomatis dari inbox items. Jangan edit manual kecuali koreksi.
-- Setiap inbox item yang jadi task → masuk ke section "Delegated To Hermes".
-- Setiap inbox item yang jadi follow-up → masuk ke section "Waiting For".
-- Setiap inbox item yang jadi konten → masuk ke section "Content Queue".
-- Top 3 Priorities = 3 task paling urgent dari semua yang pending.
-- Jika user membalas reminder/task dengan `done`, item aktif terakhir yang relevan dianggap selesai saat refresh berikutnya.
-- Jika `done` ambigu karena ada beberapa item aktif, REED harus minta klarifikasi singkat sebelum menutup task.
+## Done Today
+- [x] Opsi 2 setup (DM + passive sync)
+- [x] Tailscale connected + SSH key setup
+- [x] Pipeline tracker files created

@@ -12,11 +12,11 @@ File ini di-generate otomatis dari inbox items yang terkait kontak/relasi.
 | Nama | Company | Status | Last Contact | Next Action | Due |
 |------|---------|--------|-------------|-------------|-----|
 | DEDE | STOP TB | Proposal stage | Apr 11 | Meeting follow-up | Apr 12 |
-| [TBD] | NIRVA | Active delivery | Apr 8 | Feedback request | Apr 12 |
-| [TBD] | APPS | Active delivery | Apr 8 | Progress check | Apr 13 |
-| [TBD] | SentraChat | Retainer | Apr 6 | Monthly update | Apr 15 |
-| [TBD] | APPSSYNC | Retainer | Apr 6 | Monthly update | Apr 15 |
-| [TBD] | PT SIN | Active delivery | Apr 6 | Project check-in | Apr 15 |
+| Contact missing | NIRVA | Active delivery | Apr 8 | Feedback request | Apr 12 |
+| Contact missing | APPS | Active delivery | Apr 8 | Progress check | Apr 13 |
+| Contact missing | SentraChat | Retainer | Apr 6 | Monthly update | Apr 15 |
+| Contact missing | APPSSYNC | Retainer | Apr 6 | Monthly update | Apr 15 |
+| Contact missing | PT SIN | Active delivery | Apr 6 | Project check-in | Apr 15 |
 
 ---
 
@@ -24,11 +24,11 @@ File ini di-generate otomatis dari inbox items yang terkait kontak/relasi.
 
 ### DEDE — STOP TB Partnership
 
-- **Role:** [TBD - needs update from inbox]
+- **Role:** Contact owner for STOP TB proposal / partnership lane
 - **Relationship type:** Potential client / partnership
 - **Last interaction:** Apr 11 - Meeting scheduled
 - **Current context:** TOR draft in progress
-- **Pain points / goals:** [TBD]
+- **Pain points / goals:** Need TOR clarity, proposal review, and meeting alignment before close
 - **Open loop:** TOR → Proposal → Meeting
 - **Suggested next message:** "Pak DEDE, TOR sudah gw draft. Bisa kita review bareng sebelum meeting?"
 
@@ -49,6 +49,16 @@ File ini di-generate otomatis dari inbox items yang terkait kontak/relasi.
 | STOP TB | Proposal | IDR 8jt | 60% | Apr 2026 |
 | NIRVA | Delivery | IDR 15jt | 90% | Active |
 | APPS | Delivery | IDR 12jt | 90% | Active |
+
+## CRM Data Gaps — Must Fill
+
+| Client | Missing Data | Why It Blocks Automation |
+|---|---|---|
+| NIRVA | Primary contact name | REED cannot draft personalized follow-up |
+| APPS | Primary contact name | REED cannot draft personalized progress check |
+| SentraChat | Primary contact name | Monthly update lane remains generic |
+| APPSSYNC | Primary contact name | Monthly update lane remains generic |
+| PT SIN | Primary contact name | Check-in cannot be addressed properly |
 
 ---
 
