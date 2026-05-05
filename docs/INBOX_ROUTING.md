@@ -54,7 +54,9 @@ Prinsip keras:
   - `personal-brand/`
 - Runtime note:
   - topic Telegram `content` (`thread_id: 3`) adalah drafting lane
-  - fresh turn di topic ini sekarang diarahkan ke alias runtime `speedup-brand`; jangan pakai latensi `qwen3-coder:480b` sebagai patokan lane content
+  - fresh turn di topic ini WAJIB diarahkan ke `9router/reed-content`
+  - lane non-content default WAJIB `9router/reed-default`
+  - jangan pakai alias/model legacy (mis. `speedup-brand`, `qwen3-coder:480b`, `ollama-cloud/*`) untuk routing default
 
 ### CRM
 
@@ -101,6 +103,10 @@ Prinsip keras:
 ✅ [ROUTED → bucket] path/file
 Notifikasi telah dikirim ke [lane tujuan]
 ```
+
+Enforcement note:
+- canonical source untuk command/ack compliance ada di `docs/REED_COMMAND_RUNTIME_SOT.md`
+- file di `archives/system-snapshots/openclaw-archive/` hanya referensi historis, bukan kontrak runtime aktif
 
 Aturan format:
 - maksimum 2 baris

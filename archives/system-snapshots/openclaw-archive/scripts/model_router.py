@@ -32,6 +32,7 @@ PROBE_TIMEOUT = int(os.environ.get("MODEL_ROUTER_PROBE_TIMEOUT", "15"))
 CACHE_TTL_SECONDS = int(os.environ.get("MODEL_ROUTER_CACHE_TTL", "43200"))
 PROBE_ENABLED = os.environ.get("MODEL_ROUTER_PROBE", "1").lower() not in {"0", "false", "no"}
 USE_RESOLUTION_CACHE = os.environ.get("MODEL_ROUTER_USE_CACHE", "0").lower() in {"1", "true", "yes"}
+MANDATORY_PROVIDER = os.environ.get("MODEL_ROUTER_PROVIDER", "9router")
 
 
 def load_openclaw_config(path: Optional[Path] = None) -> Dict:
@@ -103,6 +104,7 @@ def _probe_model(provider_name: str, model_id: str, provider_cfg: Dict) -> bool:
     api_key = (
         provider_cfg.get("apiKey")
         or os.environ.get(f"{provider_name.upper().replace('-', '_')}_API_KEY")
+        or os.environ.get("NINE_ROUTER_API_KEY")
         or os.environ.get("OLLAMA_CLOUD_API_KEY")
         or ""
     )
@@ -177,7 +179,7 @@ def get_model_for_use_case(
         raise ValueError(f"Unknown use_case: {use_case}. Available: {list(aliases.keys())}")
 
     alias = aliases[use_case]
-    provider_cfg = config.get("models", {}).get("providers", {}).get("ollama-cloud", {})
+    provider_cfg = config.get("models", {}).get("providers", {}).get(MANDATORY_PROVIDER, {})
     if not isinstance(provider_cfg, dict):
         provider_cfg = {}
 
@@ -190,7 +192,7 @@ def get_model_for_use_case(
             temperature=alias.get("temperature", 0.7),
         )
 
-    ordered_candidates = _ordered_candidates(alias)
+    ordered_candidates = [item for item in _ordered_candidates(alias) if item.split("/", 1)[0] == MANDATORY_PROVIDER]
 
     cache = _load_resolution_cache()
     cache_key = _cache_key(use_case, alias, provider_cfg)

@@ -81,7 +81,7 @@ State yang harus dianggap aktif sekarang:
 - group operasi utama = `SecondBrain OS`
 - runtime resmi REED/Hermes berjalan via `hermes-gateway.service`
 - startup resmi memakai service sistem `hermes-gateway.service` dengan home runtime `/home/hermes/.hermes`
-- policy model topic aktif: `SecondBrain OS` topic `content` (`3`) default ke alias `speedup-brand` pada fresh turn; default global `qwen3-coder:480b` tetap dipakai untuk lane lain kecuali ada override sesi
+- policy model topic aktif: semua lane WAJIB resolve ke provider `9router`; topic `content` (`3`) default ke alias `9router/reed-content` dan lane lain default ke `9router/reed-default` kecuali ada override sesi yang tetap memakai provider `9router`
 - model mental `REED DULL` sebagai sistem/bot terpisah sudah retired; scheduler diperlakukan sebagai subsystem internal REED
 - voice-to-text workflow AKTIF: user nyaman kirim voice note → REED respons langsung (ini workflow utama, jangan matikan)
 - `Content nag` scheduler aktif dan diprioritaskan untuk `Threads`, `LinkedIn`, dan `Instagram Carousel`
@@ -105,7 +105,7 @@ State yang harus dianggap aktif sekarang:
 - `Command Center` (thread_id: 1): hub diskusi utama, brainstorming lintas-topik, review multi-lane. Otak utama Hermes. REED boleh me-load file dari seluruh workspace sekaligus di sini.
 - `INBOX` (thread_id: 11): capture awal (WAJIB di-route)
 - `tasks` (thread_id: 10): kerja aktif, project
-- `content` (thread_id: 3): publish lane (Model default: `speedup-brand`)
+- `content` (thread_id: 3): publish lane (Model default: `9router/reed-content`)
 - `personal-crm` (thread_id: 9): relasi dan follow-up
 - `ops`: runtime, incident, infra
 - `knowledge-base` (thread_id: 16): bahan dan knowledge work

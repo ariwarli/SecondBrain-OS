@@ -32,6 +32,7 @@ SEND_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 GROUP_CHAT_ID = -1003344368011
 BANI_USER_ID = "163335047"
 OPENCLAW_CONFIG = os.environ.get("OPENCLAW_CONFIG_PATH", "/home/openclaw/.openclaw/openclaw.json")
+MANDATORY_PROVIDER = os.environ.get("INBOX_ROUTER_PROVIDER", "9router")
 
 # Model selection via model_router or env override
 def get_classifier_config():
@@ -45,7 +46,7 @@ def get_classifier_config():
         primary, _ = get_classifier_model()
         return f"{primary.provider}/{primary.model_id}", primary.max_tokens, primary.temperature
     except Exception:
-        return "ollama-cloud/gpt-oss:20b", 180, 0
+        return f"{MANDATORY_PROVIDER}/reed-classifier", 180, 0
 
 CLASSIFIER_MODEL, CLASSIFIER_MAX_TOKENS, CLASSIFIER_TEMPERATURE = get_classifier_config()
 CLASSIFIER_THRESHOLD = int(os.environ.get("INBOX_ROUTER_CLASSIFIER_THRESHOLD", "70"))
@@ -331,11 +332,12 @@ def load_openclaw_model_provider(provider_name):
 
 
 def get_classifier_runtime():
-    provider_name, model_id = CLASSIFIER_MODEL.split("/", 1) if "/" in CLASSIFIER_MODEL else ("ollama-cloud", CLASSIFIER_MODEL)
+    provider_name, model_id = CLASSIFIER_MODEL.split("/", 1) if "/" in CLASSIFIER_MODEL else (MANDATORY_PROVIDER, CLASSIFIER_MODEL)
     provider = load_openclaw_model_provider(provider_name) or {}
-    base_url = os.environ.get("INBOX_ROUTER_CLASSIFIER_BASE_URL") or provider.get("baseUrl") or "https://ollama.com/v1"
+    base_url = os.environ.get("INBOX_ROUTER_CLASSIFIER_BASE_URL") or provider.get("baseUrl") or os.environ.get("NINE_ROUTER_BASE_URL", "http://100.113.246.119:20128/v1")
     api_key = (
         os.environ.get("INBOX_ROUTER_CLASSIFIER_API_KEY")
+        or os.environ.get("NINE_ROUTER_API_KEY")
         or os.environ.get("OLLAMA_CLOUD_API_KEY")
         or provider.get("apiKey")
         or ""
@@ -348,6 +350,16 @@ def get_classifier_runtime():
         "max_tokens": CLASSIFIER_MAX_TOKENS,
         "temperature": CLASSIFIER_TEMPERATURE,
     }
+
+
+def log_classifier_runtime_marker():
+    runtime = get_classifier_runtime()
+    log.info(
+        "Model routing marker: provider=%s model=%s base_url=%s",
+        runtime["provider"],
+        runtime["model"],
+        runtime["base_url"],
+    )
 
 
 def is_conversational(text):
@@ -1035,6 +1047,7 @@ def run_once():
     if not SEND_TOKEN:
         log.error("TELEGRAM_BOT_TOKEN not set!")
         sys.exit(1)
+    log_classifier_runtime_marker()
     count = process_inbox()
     log.info(f"Processed {count} inbox items")
 
@@ -1045,6 +1058,7 @@ def run_daemon(interval=20):
         sys.exit(1)
 
     log.info(f"Inbox monitor v2 started (poll every {interval}s, file-based)")
+    log_classifier_runtime_marker()
     while True:
         try:
             process_inbox()

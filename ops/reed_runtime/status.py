@@ -4,6 +4,7 @@ import json
 from typing import Any
 
 from .audit import tail_events
+from .commands import command_compliance_summary
 from .cron import cron_summary
 from .memory import get_memory_store
 from .paths import OP_MEMORY_PATH, SCHEDULER_DIR, USER_MEMORY_PATH
@@ -21,6 +22,13 @@ def build_status() -> dict[str, Any]:
     return {
         "mode": spec.raw.get("mode"),
         "deployment_phase": spec.deployment_phase,
+        "model_routing": {
+            "mandatory_provider": spec.mandatory_provider,
+            "required_env": spec.required_model_env,
+            "required_aliases": spec.required_aliases,
+            "lane_defaults": spec.lane_defaults,
+            "configured": spec.model_routing,
+        },
         "channels": {
             "primary": spec.channel_primary,
             "planned": spec.channel_planned,
@@ -42,6 +50,7 @@ def build_status() -> dict[str, Any]:
             "archive_count": archive_count,
             "summary": cron_summary(),
         },
+        "command_compliance": command_compliance_summary(),
         "recent_audit_events": tail_events(5),
     }
 

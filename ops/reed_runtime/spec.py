@@ -52,6 +52,39 @@ class RuntimeSpec:
         tiers = self.raw.get("execution", {}).get("autonomy_tiers", {})
         return {str(key): list(value) for key, value in tiers.items()}
 
+    @property
+    def model_routing(self) -> dict[str, Any]:
+        routing = self.raw.get("runtime", {}).get("model_routing", {})
+        return routing if isinstance(routing, dict) else {}
+
+    @property
+    def mandatory_provider(self) -> str:
+        return str(self.model_routing.get("mandatory_provider", "")).strip()
+
+    @property
+    def required_model_env(self) -> list[str]:
+        required = self.model_routing.get("required_env", [])
+        return [str(item) for item in required if isinstance(item, str) and item]
+
+    @property
+    def required_aliases(self) -> list[str]:
+        aliases = self.model_routing.get("required_aliases", [])
+        return [str(item) for item in aliases if isinstance(item, str) and item]
+
+    @property
+    def lane_defaults(self) -> dict[str, str]:
+        defaults = self.model_routing.get("lane_defaults", {})
+        if not isinstance(defaults, dict):
+            return {}
+        normalized: dict[str, str] = {}
+        for key, value in defaults.items():
+            if not isinstance(key, str) or not key.strip():
+                continue
+            if not isinstance(value, str) or not value.strip():
+                continue
+            normalized[key.strip()] = value.strip()
+        return normalized
+
 
 def load_runtime_spec() -> RuntimeSpec:
     return RuntimeSpec(_load_yaml(SPEC_PATH))

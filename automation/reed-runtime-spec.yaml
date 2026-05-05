@@ -46,6 +46,34 @@ runtime:
       - logs
       - audit
       - alerts
+  model_routing:
+    mandatory_provider: "9router"
+    required_aliases:
+      - classifier
+      - wiki_ingest
+      - reed_dm
+      - wellbeing
+      - content_lane
+      - default_lane
+    required_env:
+      - NINE_ROUTER_BASE_URL
+      - NINE_ROUTER_API_KEY
+    lane_defaults:
+      content: "9router/reed-content"
+      default: "9router/reed-default"
+    classifier:
+      model: "9router/reed-classifier"
+      max_tokens: 180
+      temperature: 0
+    wiki_ingest:
+      model: "9router/reed-default"
+      temperature: 0
+    reed_dm:
+      model: "9router/reed-default"
+      temperature: 0.2
+    wellbeing:
+      model: "9router/reed-default"
+      temperature: 0.3
 
 channels:
   primary:

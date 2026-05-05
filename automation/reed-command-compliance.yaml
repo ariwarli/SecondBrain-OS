@@ -1,0 +1,49 @@
+version: 1
+global_command_menu:
+  - /menu
+
+runtime_sources:
+  # Canonical DM command handler target for next integration.
+  - path: gateway/platforms/telegram.py
+    required: false
+    purpose: canonical_dm_command_handler_target
+  # Active audit source currently available in this workspace.
+  - path: archives/system-snapshots/openclaw-archive/scripts/inbox_monitor_v2.py
+    required: true
+    purpose: active_audit_router_source
+
+topic_commands:
+  command-center:
+    required:
+      - /menu
+      - /model
+  inbox:
+    required:
+      - /menu
+      - /model
+    required_patterns:
+      - "^/route-[a-z0-9-]+$"
+  tasks:
+    required:
+      - /menu
+      - /model
+  content:
+    required:
+      - /menu
+      - /model
+  personal-crm:
+    required:
+      - /menu
+      - /model
+  ops:
+    required:
+      - /menu
+      - /model
+  knowledge-base:
+    required:
+      - /menu
+      - /model
+  updates:
+    required:
+      - /menu
+      - /model

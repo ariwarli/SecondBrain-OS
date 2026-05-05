@@ -15,6 +15,7 @@ from ops.reed_runtime.approvals import classify_action
 from ops.reed_runtime.cron_engine import initialize_state, list_state_jobs, run_job, set_paused, tick
 from ops.reed_runtime.cron import list_cron_jobs
 from ops.reed_runtime.doctor import doctor_summary
+from ops.reed_runtime.env import load_runtime_env
 from ops.reed_runtime.memory import get_memory_store
 from ops.reed_runtime.paths import ensure_state_dirs
 from ops.reed_runtime.recall import add_event, search_events
@@ -192,6 +193,7 @@ def handle_doctor(args: argparse.Namespace) -> int:
 
 
 def main() -> int:
+    load_runtime_env()
     ensure_state_dirs()
     parser = build_parser()
     args = parser.parse_args()
