@@ -1,0 +1,152 @@
+{
+  "system": {
+    "name": "CCTV AI System - PT CSA TBG",
+    "version": "1.0.0",
+    "jetson_model": "Orin Nano Super 8GB"
+  },
+  
+  "models": {
+    "intrusion_detection": {
+      "model_path": "/home/jetson/cctv-ai/models/yolo11n.engine",
+      "confidence_threshold": 0.5,
+      "classes": ["person"],
+      "input_size": 640
+    },
+    "grass_monitoring": {
+      "mode": "simple",
+      "model_path": "/home/jetson/cctv-ai/models/grass_v1.engine",
+      "check_interval_hours": 1,
+      "green_hsv_lower": [35, 40, 40],
+      "green_hsv_upper": [85, 255, 255]
+    },
+    "face_recognition": {
+      "model_name": "buffalo_l",
+      "detection_size": 640,
+      "recognition_threshold": 0.6,
+      "database_path": "/home/jetson/cctv-ai/face_database.db"
+    }
+  },
+  
+  "starsender": {
+    "api_key": "YOUR_STARSENDER_API_KEY",
+    "device_id": "YOUR_DEVICE_ID",
+    "base_url": "https://waapi.tk"
+  },
+  
+  "alerts": {
+    "phone_numbers": [
+      "6281234567890",
+      "6281234567891"
+    ],
+    "cooldown_seconds": {
+      "intrusion": 300,
+      "grass": 86400,
+      "face_unknown": 60,
+      "face_authorized": 3600
+    },
+    "enable_images": true,
+    "image_quality": 85
+  },
+  
+  "sites": {
+    "site_a": {
+      "name": "Site A - Main Office",
+      "location": "Jakarta",
+      "cameras": {
+        "cam1": {
+          "name": "Gate Entrance",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.1.10:554/unicast/c1/s1/live",
+          "features": ["intrusion", "face"],
+          "process_interval": 15,
+          "restricted_zone": [[100, 200], [300, 200], [300, 400], [100, 400]],
+          "resolution": [640, 480]
+        },
+        "cam2": {
+          "name": "Parking Lot",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.1.11:554/unicast/c1/s1/live",
+          "features": ["intrusion", "grass"],
+          "process_interval": 30,
+          "restricted_zone": [[150, 250], [350, 250], [350, 450], [150, 450]],
+          "grass_threshold": 65,
+          "resolution": [640, 480]
+        },
+        "cam3": {
+          "name": "Building Entrance",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.1.12:554/unicast/c1/s1/live",
+          "features": ["face"],
+          "process_interval": 10,
+          "resolution": [640, 480]
+        },
+        "cam4": {
+          "name": "Perimeter Fence",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.1.13:554/unicast/c1/s1/live",
+          "features": ["intrusion", "grass"],
+          "process_interval": 30,
+          "restricted_zone": [[50, 300], [590, 300], [590, 480], [50, 480]],
+          "grass_threshold": 75,
+          "resolution": [640, 480]
+        }
+      }
+    },
+    "site_b": {
+      "name": "Site B - Warehouse",
+      "location": "Tangerang",
+      "cameras": {
+        "cam5": {
+          "name": "Warehouse Entry",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.2.10:554/unicast/c1/s1/live",
+          "features": ["intrusion", "face"],
+          "process_interval": 15,
+          "restricted_zone": [[80, 150], [560, 150], [560, 450], [80, 450]],
+          "resolution": [640, 480]
+        },
+        "cam6": {
+          "name": "Loading Dock",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.2.11:554/unicast/c1/s1/live",
+          "features": ["intrusion"],
+          "process_interval": 30,
+          "restricted_zone": [[100, 200], [540, 200], [540, 400], [100, 400]],
+          "resolution": [640, 480]
+        },
+        "cam7": {
+          "name": "Storage Area",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.2.12:554/unicast/c1/s1/live",
+          "features": ["intrusion"],
+          "process_interval": 30,
+          "restricted_zone": [[120, 180], [520, 180], [520, 420], [120, 420]],
+          "resolution": [640, 480]
+        },
+        "cam8": {
+          "name": "Perimeter",
+          "rtsp_url": "rtsp://admin:PASSWORD@192.168.2.13:554/unicast/c1/s1/live",
+          "features": ["intrusion", "grass"],
+          "process_interval": 30,
+          "restricted_zone": [[60, 250], [580, 250], [580, 460], [60, 460]],
+          "grass_threshold": 70,
+          "resolution": [640, 480]
+        }
+      }
+    }
+  },
+  
+  "performance": {
+    "max_fps_per_stream": 15,
+    "gpu_memory_fraction": 0.9,
+    "enable_tensorrt": true,
+    "enable_cuda": true,
+    "num_worker_threads": 4
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "log_file": "/home/jetson/cctv-ai/logs/system.log",
+    "max_log_size_mb": 100,
+    "backup_count": 5
+  },
+  
+  "storage": {
+    "alert_images_path": "/home/jetson/cctv-ai/alerts",
+    "max_alert_images": 1000,
+    "cleanup_days": 7
+  }
+}

@@ -1,0 +1,14 @@
+[Unit]
+Description=REED Inbox Monitor v2 — File-based inbox router (no getUpdates conflict)
+After=openclaw-gateway.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/openclaw/banirisset/openclaw/scripts/inbox_monitor_v2.py --daemon --interval 20
+WorkingDirectory=/home/openclaw/banirisset
+EnvironmentFile=/home/openclaw/.openclaw/openclaw-gateway.env
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
