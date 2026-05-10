@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Workflow Checklist</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+body {
+  background: #0a0a0a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  padding: 20px;
+}
+.infographic {
+  width: 1080px;
+  height: 1350px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+  padding: 52px 48px 40px 48px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle decorative lines */
+.infographic::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #d4af37, #b8941d, #d4af37, transparent);
+}
+.infographic::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 36px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.logo {
+  width: 56px;
+  height: 56px;
+}
+.logo svg {
+  width: 100%;
+  height: 100%;
+}
+.logo svg circle {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+.title-block h1 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  line-height: 1.1;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.title-block h1 span {
+  color: #d4af37;
+  font-weight: 700;
+}
+.title-block h2 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.header-right {
+  max-width: 260px;
+  text-align: right;
+  padding-top: 4px;
+}
+.header-right .quote {
+  font-size: 13px;
+  font-weight: 500;
+  color: #d4af37;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+.header-right .quote::before {
+  content: '"';
+  font-size: 20px;
+  line-height: 0;
+  vertical-align: -2px;
+}
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 16px;
+  flex: 1;
+  margin-bottom: 28px;
+}
+.box {
+  background: linear-gradient(145deg, rgba(26, 26, 26, 0.95) 0%, rgba(18, 18, 18, 0.95) 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  border-radius: 14px;
+  padding: 18px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.box:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.08);
+}
+.box-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.number-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37, #b8941d);
+  color: #0a0a0a;
+  font-weight: 800;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+.box-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 2px;
+}
+.box li {
+  font-size: 11.5px;
+  color: #aaaaaa;
+  line-height: 1.55;
+  margin-bottom: 5px;
+  padding-left: 14px;
+  position: relative;
+}
+.box li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #d4af37;
+  font-size: 10px;
+  opacity: 0.7;
+}
+.box li:last-child {
+  margin-bottom: 0;
+}
+/* Footer */
+.footer {
+  text-align: center;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  padding-top: 20px;
+}
+.footer .motto {
+  font-size: 15px;
+  font-weight: 600;
+  color: #d4af37;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.footer .author {
+  font-size: 12px;
+  color: #666666;
+  letter-spacing: 0.5px;
+}
+/* Responsive: scale via transform for smaller screens */
+@media (max-width: 1120px) {
+  .infographic {
+    transform: scale(0.85);
+    transform-origin: top center;
+  }
+}
+@media (max-width: 940px) {
+  .infographic {
+    transform: scale(0.7);
+  }
+}
+@media (max-width: 780px) {
+  .infographic {
+    transform: scale(0.55);
+  }
+}
+@media (max-width: 620px) {
+  .infographic {
+    transform: scale(0.4);
+  }
+}
+</style>
+</head>
+<body>
+<div class="infographic">
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">
+        <svg viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="26" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+          <g fill="#ffffff">
+            <circle cx="28" cy="9" r="3.2"/>
+            <circle cx="28" cy="47" r="3.2"/>
+            <circle cx="9" cy="28" r="3.2"/>
+            <circle cx="47" cy="28" r="3.2"/>
+            <circle cx="14.5" cy="14.5" r="2.6"/>
+            <circle cx="41.5" cy="41.5" r="2.6"/>
+            <circle cx="14.5" cy="41.5" r="2.6"/>
+            <circle cx="41.5" cy="14.5" r="2.6"/>
+          </g>
+          <circle cx="28" cy="28" r="6" fill="#ffffff" opacity="0.15"/>
+          <circle cx="28" cy="28" r="3" fill="#ffffff" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="title-block">
+        <h1>CLAUDE<br><span>WORKFLOW</span></h1>
+        <h2>CHECKLIST</h2>
+      </div>
+    </div>
+    <div class="header-right">
+      <p class="quote">Stop using Claude like a chatbot. Use it like a real work system.&quot;</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">1</div>
+        <span class="box-title">Foundation</span>
+      </div>
+      <ul>
+        <li>Use the paid version for serious work</li>
+        <li>Download the desktop app</li>
+        <li>Turn on stronger thinking for hard tasks</li>
+        <li>Learn the platform before expecting better results</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">2</div>
+        <span class="box-title">Workspace Setup</span>
+      </div>
+      <ul>
+        <li>Create one main Claude workspace folder</li>
+        <li>Add folders: personal context, outputs, templates</li>
+        <li>Write a clear "about me" file</li>
+        <li>Keep your system organized</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">3</div>
+        <span class="box-title">Better Prompting</span>
+      </div>
+      <ul>
+        <li>Clearly explain what you want</li>
+        <li>Define what success looks like</li>
+        <li>Ask Claude to clarify before starting</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">4</div>
+        <span class="box-title">Tool Connections</span>
+      </div>
+      <ul>
+        <li>Connect only useful platforms</li>
+        <li>Gmail, Drive, Notion, GitHub, docs</li>
+        <li>Turn off unnecessary connectors</li>
+        <li>Keep your workflow clean</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">5</div>
+        <span class="box-title">Repeatable Systems</span>
+      </div>
+      <ul>
+        <li>Build reusable commands</li>
+        <li>Save strong workflows</li>
+        <li>Add clear "do not do" rules</li>
+        <li>Reuse proven systems</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">6</div>
+        <span class="box-title">Project Management</span>
+      </div>
+      <ul>
+        <li>One project for each recurring task</li>
+        <li>Upload your best examples</li>
+        <li>Save strong templates</li>
+        <li>Build repeatable delivery systems</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">7</div>
+        <span class="box-title">Design &amp; Build</span>
+      </div>
+      <ul>
+        <li>Use Claude for landing pages</li>
+        <li>Content systems</li>
+        <li>Brand structure</li>
+        <li>Faster execution</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">8</div>
+        <span class="box-title">Smarter Research</span>
+      </div>
+      <ul>
+        <li>Use web search</li>
+        <li>Run multiple searches</li>
+        <li>Find information gaps</li>
+        <li>Verify important facts</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="box-header">
+        <div class="number-circle">9</div>
+        <span class="box-title">Token Management</span>
+      </div>
+      <ul>
+        <li>Plan first</li>
+        <li>Build second</li>
+        <li>Keep files lightweight</li>
+        <li>Restart overloaded chats</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="motto">Systems beat better AI. Structure kills randomness.</p>
+    <p class="author">By Usama Tanveer</p>
+  </div>
+</div>
+</body>
+</html>
