@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Any
@@ -44,48 +43,54 @@ def run_command_compliance_checks() -> list[CommandCheckResult]:
         )
     )
 
-    topic_commands = contract.get("topic_commands", {})
-    if not isinstance(topic_commands, dict):
-        topic_commands = {}
-
-    missing_model_topics: list[str] = []
-    missing_route_pattern_topics: list[str] = []
-    for topic, config in topic_commands.items():
-        if not isinstance(config, dict):
-            continue
-        required = config.get("required", [])
-        if not isinstance(required, list):
-            required = []
-        if "/model" not in required:
-            missing_model_topics.append(str(topic))
-
-        if str(topic) == "inbox":
-            required_patterns = config.get("required_patterns", [])
-            if not isinstance(required_patterns, list):
-                required_patterns = []
-            has_route_pattern = any(
-                isinstance(pattern, str) and re.search(r"route-", pattern)
-                for pattern in required_patterns
-            )
-            if not has_route_pattern:
-                missing_route_pattern_topics.append(str(topic))
-
-    checks.append(
-        CommandCheckResult(
-            "model_command_all_topics",
-            not missing_model_topics,
-            "All topics include /model"
-            if not missing_model_topics
-            else f"Topics missing /model: {', '.join(sorted(missing_model_topics))}",
-        )
+    menu_contract = contract.get("telegram_menu", {})
+    if not isinstance(menu_contract, dict):
+        menu_contract = {}
+    exposed_commands = menu_contract.get("exposed_commands", [])
+    if not isinstance(exposed_commands, list):
+        exposed_commands = []
+    hidden_commands = menu_contract.get("hidden_commands", [])
+    if not isinstance(hidden_commands, list):
+        hidden_commands = []
+    exposed_menu_count = sum(
+        1 for item in exposed_commands if isinstance(item, str) and item.strip() == "/menu"
     )
     checks.append(
         CommandCheckResult(
-            "inbox_route_command_pattern",
-            not missing_route_pattern_topics,
-            "Inbox topic includes /route-* command pattern"
-            if not missing_route_pattern_topics
-            else "Inbox topic missing /route-* command pattern",
+            "launcher_only_menu_surface",
+            exposed_menu_count == 1 and len(exposed_commands) == 1,
+            f"telegram_menu.exposed_commands={exposed_commands}",
+        )
+    )
+    menu_hidden = any(isinstance(item, str) and item.strip() == "/menu" for item in hidden_commands)
+    checks.append(
+        CommandCheckResult(
+            "launcher_not_hidden",
+            not menu_hidden,
+            "Launcher command /menu is not listed in hidden_commands"
+            if not menu_hidden
+            else "hidden_commands must not include /menu",
+        )
+    )
+
+    topic_commands = contract.get("topic_commands", {})
+    if not isinstance(topic_commands, dict):
+        topic_commands = {}
+    topics_missing_launcher: list[str] = []
+    for topic, config in topic_commands.items():
+        if not isinstance(config, dict):
+            topics_missing_launcher.append(str(topic))
+            continue
+        launcher = str(config.get("launcher", "")).strip()
+        if launcher != "/menu":
+            topics_missing_launcher.append(str(topic))
+    checks.append(
+        CommandCheckResult(
+            "topic_launcher_binding",
+            not topics_missing_launcher,
+            "All topics are bound to /menu launcher"
+            if not topics_missing_launcher
+            else f"Topics missing /menu launcher binding: {', '.join(sorted(topics_missing_launcher))}",
         )
     )
 

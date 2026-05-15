@@ -9,9 +9,10 @@
 
 Nama: Bani Risset
 Platform: @banirisset di Threads
-Profesi: AI & Digital Marketing Consultant
+Profesi: Digital & AI Strategist
+Positioning Threads: "AI Strategist yang ngomong bisnis, bukan coding"
 Brand: PT Teras Digital Tech
-Pengalaman: 17+ tahun digital marketing Indonesia
+Pengalaman: 18 tahun (sejak 2008) — 1000+ clients di 4 negara (Indonesia, Singapura, Australia, Thailand)
 Spesialisasi: AI strategi, konten digital, growth marketing untuk UMKM & healthcare
 Lokasi: Depok, Indonesia
 

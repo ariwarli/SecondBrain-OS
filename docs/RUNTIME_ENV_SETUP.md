@@ -18,6 +18,7 @@ REED runtime sekarang membaca env otomatis dari:
 ```env
 NINE_ROUTER_BASE_URL=http://100.113.246.119:20128/v1
 NINE_ROUTER_API_KEY=...
+TELEGRAM_BOT_TOKEN=...
 ```
 
 ## Perintah (tanpa inject manual)
@@ -27,3 +28,4 @@ NINE_ROUTER_API_KEY=...
 - `python3 ops/scripts/model_routing_guardrail.py`
 - `python3 ops/scripts/model_routing_smoke.py`
 - `python3 ops/scripts/reed_runtime_health_evidence.py`
+- `python3 ops/scripts/sync_reed_dm_menu.py` (force DM menu launcher-only `/menu`)

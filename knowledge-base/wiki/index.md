@@ -46,6 +46,11 @@ Current canon entries:
 - `knowledge-base/wiki/SOPs/sop-intake-dokumen-reed.md`
 - `knowledge-base/wiki/tailscale-setup.md` — Tailscale install, connect, SSH built-in, ACL
 
+### `Frameworks`
+
+Current canon entries:
+- `knowledge-base/wiki/Frameworks/quarter-way-pause.md` — Framework pause deliberate di 25% project untuk putus pola impulsive switching
+
 ### `Decisions`
 
 Untuk keputusan final, alasan singkat, dan konsekuensi operasionalnya.

@@ -1,5 +1,5 @@
 <!--
-Tujuan: menetapkan source of truth command runtime REED untuk audit /menu, /model, dan /route-*
+Tujuan: menetapkan source of truth command runtime REED untuk audit launcher-only /menu
 Caller: operator runtime, maintainer REED, auditor incident
 Dependensi: automation/reed-command-compliance.yaml, docs/INBOX_ROUTING.md
 Main Functions: lock canonical command handler, matrix command per topic, status compliance
@@ -24,9 +24,9 @@ Jika canonical handler belum ada di workspace, status compliance harus dianggap 
 
 Kontrak command wajib dikelola di `automation/reed-command-compliance.yaml`:
 
-- `/menu` harus singleton global.
-- Semua topic wajib memiliki `/model`.
-- Topic `inbox` wajib punya minimal satu pola `/route-*`.
+- Surface menu Telegram hanya boleh expose `/menu`.
+- Command lain boleh tetap tersedia sebagai internal/fallback, tapi harus hidden dari menu Telegram.
+- Semua topic harus bind launcher ke `/menu`.
 
 ## Ack Contract Alignment
 

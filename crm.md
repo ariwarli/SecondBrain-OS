@@ -70,3 +70,16 @@ File ini di-generate otomatis dari inbox items yang terkait kontak/relasi.
 - Draft pesan singkat, langsung, personal. Voice: percaya diri tanpa arogan.
 - Jika user membalas follow-up atau reminder CRM dengan `done`, follow-up aktif terakhir dianggap selesai atau next action cleared.
 - Setelah `done`, reminder yang sama tidak perlu diulang kecuali user membuat next action baru.
+
+---
+
+## Personal Relationships (Non-Client)
+
+Kontak personal yang relevan untuk context Hermes — bukan pipeline revenue.
+
+| Nama | Relasi | Context | Catatan |
+|------|--------|---------|---------|
+| Azril | Anak | Keluarga inti | Nama anak Bani |
+| Fariz | Kolaborator | Ruang Curhat project | Contact personal, bukan via grup |
+| Dr. Ronald / Dr. Suryalena | Dokter | Kesehatan | Dokter yang sudah kenal riwayat Bani sejak lama — kontak darurat bila perlu |
+| Sindi | Relasi personal | Finansial | Pernah ada transaksi pinjaman |

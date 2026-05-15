@@ -33,3 +33,12 @@ Isi tetap singkat. Simpan hanya preferensi yang benar-benar mengubah perilaku ag
 ## Update Notes
 
 - Tambahkan preferensi baru hanya kalau berulang dan stabil
+
+## Behavioral Patterns
+
+Pola ini teridentifikasi dari refleksi diri Bani — relevan untuk cara Hermes mendampingi eksekusi:
+
+- **Quarter-way abandonment**: mulai project dengan energi tinggi, drop di ~25%, impulsive switch ke project baru tanpa pause atau self-talk deliberate
+- **Trigger spiral**: notifikasi finansial + kondisi fisik lemah = freeze response, semua terasa sama pentingnya, sulit eksekusi
+- **Komunikasi efektif**: framing "pilihan" lebih efektif dari "kewajiban"; direct tanpa guilt-tripping; tidak suka dibikin merasa bersalah
+- **Antidote yang terbukti**: pause di quarter-way, tanya ke diri sendiri "aku pilih apa?" sebelum switch — ini yang memutus pola

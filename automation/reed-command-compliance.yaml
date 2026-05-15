@@ -2,6 +2,21 @@ version: 1
 global_command_menu:
   - /menu
 
+telegram_menu:
+  exposed_commands:
+    - /menu
+  hidden_commands:
+    - /new
+    - /reset
+    - /stop
+    - /status
+    - /model
+    - /route-content
+    - /route-tasks
+    - /route-personal-crm
+    - /route-knowledge-base
+    - /route-updates
+
 runtime_sources:
   # Canonical DM command handler target for next integration.
   - path: gateway/platforms/telegram.py
@@ -14,36 +29,18 @@ runtime_sources:
 
 topic_commands:
   command-center:
-    required:
-      - /menu
-      - /model
+    launcher: /menu
   inbox:
-    required:
-      - /menu
-      - /model
-    required_patterns:
-      - "^/route-[a-z0-9-]+$"
+    launcher: /menu
   tasks:
-    required:
-      - /menu
-      - /model
+    launcher: /menu
   content:
-    required:
-      - /menu
-      - /model
+    launcher: /menu
   personal-crm:
-    required:
-      - /menu
-      - /model
+    launcher: /menu
   ops:
-    required:
-      - /menu
-      - /model
+    launcher: /menu
   knowledge-base:
-    required:
-      - /menu
-      - /model
+    launcher: /menu
   updates:
-    required:
-      - /menu
-      - /model
+    launcher: /menu

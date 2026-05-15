@@ -52,11 +52,21 @@ Prinsip keras:
 - Path default:
   - `brand-os/`
   - `personal-brand/`
-- Runtime note:
-  - topic Telegram `content` (`thread_id: 3`) adalah drafting lane
-  - fresh turn di topic ini WAJIB diarahkan ke `9router/reed-content`
-  - lane non-content default WAJIB `9router/reed-default`
-  - jangan pakai alias/model legacy (mis. `speedup-brand`, `qwen3-coder:480b`, `ollama-cloud/*`) untuk routing default
+  - Runtime note:
+    - topic Telegram `content` (`thread_id: 3`) adalah drafting lane
+    - fresh turn di topic ini WAJIB diarahkan ke `9router/reed-content`
+    - lane non-content default WAJIB `9router/reed-default`
+    - jangan pakai alias/model legacy (mis. `speedup-brand`, `qwen3-coder:480b`, `ollama-cloud/*`) untuk routing default
+
+### Hormozi
+
+- Trigger: offer, pricing, funnel, sales copy, value equation, lead magnet, acquisition, source-to-concept synthesis berbasis Hormozi
+- Route default: `knowledge-base` untuk intake awal, lalu `content` atau `tasks` sesuai output
+- Topic khusus: `Hormozi` bila volume kerja framework ini tinggi dan ingin lane terpisah
+- Path default:
+  - `knowledge-base/domains/hormozi/`
+  - `knowledge-base/wiki/Frameworks/hormozi/`
+  - `knowledge-base/wiki/Research/hormozi/`
 
 ### CRM
 
@@ -95,6 +105,7 @@ Prinsip keras:
 - `personal-crm` = relasi dan follow-up
 - `ops` = runtime, incident, infra
 - `knowledge-base` = bahan dan knowledge work
+- `Hormozi` = domain lane khusus offer, pricing, funnel, dan synthesis Hormozi
 - `updates` = brief, summary, alert
 
 ## Confirmation Format
